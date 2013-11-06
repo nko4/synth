@@ -1,0 +1,19 @@
+{
+  "name": "nko4-synth",
+  "version": "0.0.0",
+  "description": "synth",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nko4/synth.git"
+  },
+  "dependencies": {
+    "nko": "*"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
