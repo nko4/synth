@@ -5,14 +5,19 @@ module.exports = function(store) {
         express = require('express'),
         io = require('socket.io'),
         port = (isProduction ? 80 : 8000),
-        uuid = require('node-uuid'),
-        meta = require('../meta');
+        meta = require('../meta'),
+        user = require('./user');
 
 
     var app = express(), 
         server = http.createServer(app), 
         io = io.listen(server);
 
+
+    app.use(function(req, res, next) {
+        req.store = store;
+        next();
+    });          
 
     app.use(express.cookieParser());
     app.use(express.bodyParser());
@@ -23,47 +28,9 @@ module.exports = function(store) {
     app.set('view engine', 'jade');
     app.set('views', './public/views');
 
-    app.get('/user', function(req, res) {
-        var userId = req.cookies[meta.userId];
-        store.getUser(userId, function(name) {
-            if(name) {
-                res.json(200, {
-                    name: name
-                });
-            }
-            else {
-                res.clearCookie(meta.userId);
-                res.json(404, {
-                    error: "user not found"
-                });
-            }
-        });
-    });
 
-    app.post('/user', function(req, res) {
-        var userId = req.cookies[meta.userId];
-        store.getUser(userId, function(name) {
-            if(name) {
-                res.json(400, {
-                    error: "user already exists, clear out the current user"
-                });
-            }
-            else {
-                var name = req.body.name;
-                if(name) {
-                    var userId = uuid.v4();
-                    res.cookie(meta.userId, userId);
-                    store.setUser(userId, name);
-                    res.json(200, {});
-                }
-                else {
-                    res.json(400, {
-                        error: "please send a name in the post body"
-                    });
-                }
-            }
-        });
-    });    
+    app.get('/user', user.get);
+    app.post('/user', user.post);    
 
     app.get('/create', function(req, res) {
         // create user id and store 
