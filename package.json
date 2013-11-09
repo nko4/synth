@@ -15,7 +15,10 @@
     "express": "3.4.4",
     "socket.io": "0.9.16",
     "node-uuid": "*",
+    "dustjs-linkedin": "*",
+    "dustjs-helpers": "*",
     "consolidate": "*",
+    "watch": "*",
     "redis": "*"
   },
   "engines": {

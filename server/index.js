@@ -5,7 +5,8 @@ module.exports = function(store) {
         express = require('express'),
         io = require('socket.io'),
         port = (isProduction ? 80 : 8000),
-        engines = require('consolidate'),
+        dust = require('dustjs-linkedin'),
+        cons = require('consolidate'),
         meta = require('../meta'),
         uuid = require('node-uuid'),
         user = require('./user');
@@ -25,8 +26,8 @@ module.exports = function(store) {
     app.use(express.static('./public'));
     app.use(app.router);
 
-    app.engine('dust', engines.dust);
-    app.set('views', './public/views');
+    app.engine('dust', cons.dust);
+    app.set('views', './server/templates');
     app.set('view engine', 'dust');
 
     app.get('/', function(req, res, next) {

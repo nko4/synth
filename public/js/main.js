@@ -4,23 +4,24 @@ var Application = {
 		var userData;
 		$(document).ready(function() {
 
-			var source   = $("#dashboard").html();
-		//	var compiled = dust.compileFn(source,"dashboard"); 
-		//	dust.loadSource(compiled);
+			/* var source   = $("#dashboardWrapper").html();
+			console.log(source);
+			var compiled = dust.compileFn(source,"dashboard"); 
+			dust.loadSource(compiled);
+			console.log(compiled); */
 			$.ajax({
 				type: "GET",
 				url: "/user",
 			})
 			.done(function( data ) {
-				dust.render("dashboard", {name: data.name}, function(err, out) {
-					$('#dashboardWrapper').show();
-					console.log(err);
-					console.log(out);
+				dust.render("dashboard", {uname: "sumit"}, function(err, out) {
+					$('#dashboardWrapper').removeClass('hide');
 					$('#dashboardWrapper').append(out);
+					console.log(out);
 				});
 		  	})
 		  	.fail(function( data) {
-		    	$('#register').show();
+		    	$('#register').removeClass('hide');
 		 	});
 			$('#registerForm').on('submit', function(evt) {
 				evt.preventDefault();
@@ -30,8 +31,8 @@ var Application = {
 					data: $('#registerForm').serialize()
 				})
 				.done(function( data ) {
-			  		dust.render("dashboard", {name: "Fred"}, function(err, out) {
-						$('#dashboardWrapper').show();
+			  		dust.render("dashboard", {uname: "Fred"}, function(err, out) {
+						$('#dashboardWrapper').removeClass('hide');
 						console.log(err);
 						console.log(out);
 						$('#dashboardWrapper').append(out);
