@@ -15,31 +15,54 @@ module.exports = function(store) {
 
 
     app.use(express.cookieParser());
+    app.use(express.bodyParser());
     app.use(express.logger());
-    app.use(express.static(__dirname + '/public'));
+    app.use(express.static('./public'));
     app.use(app.router);
 
     app.set('view engine', 'jade');
     app.set('views', './public/views');
 
-    app.get('/', function(req, res) {
+    app.get('/user', function(req, res) {
         var userId = req.cookies[meta.userId];
         store.getUser(userId, function(name) {
             if(name) {
-                res.send("Registered User found: " + name);
+                res.json(200, {
+                    name: name
+                });
             }
             else {
                 res.clearCookie(meta.userId);
-                res.send("Not a registered user.");
+                res.json(404, {
+                    error: "user not found"
+                });
             }
         });
     });
 
-    app.post('/register/:name', function(req, res) {
-        var userId = uuid.v4();
-        res.cookie(meta.userId, userId);
-        store.setUser(userId, req.params.name);
-        res.send(userId + " : " + req.params.name);
+    app.post('/user', function(req, res) {
+        var userId = req.cookies[meta.userId];
+        store.getUser(userId, function(name) {
+            if(name) {
+                res.json(400, {
+                    error: "user already exists, clear out the current user"
+                });
+            }
+            else {
+                var name = req.body.name;
+                if(name) {
+                    var userId = uuid.v4();
+                    res.cookie(meta.userId, userId);
+                    store.setUser(userId, name);
+                    res.json(200, {});
+                }
+                else {
+                    res.json(400, {
+                        error: "please send a name in the post body"
+                    });
+                }
+            }
+        });
     });    
 
     app.get('/create', function(req, res) {
