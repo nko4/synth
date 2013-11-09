@@ -32,11 +32,15 @@ module.exports = function(store) {
     app.get('/user', user.get);
     app.post('/user', user.post);    
 
-    app.get('/create', function(req, res) {
-        // create user id and store 
-        ;
-        res.send("just set a new cookie");
+    app.get('/games', function(req, res) {
+        store.getGames(function(games) {
+            res.json(200, {
+                games: games
+            });
+        });
     });
+
+
 
     app.get('/join', function(req, res) {
         res.send('join game');

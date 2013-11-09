@@ -8,11 +8,20 @@ Store.prototype.setUser = function(userId, name) {
 };
 
 Store.prototype.getUser = function(userId, callback) {
-	this.redis.get(userId, function(err, reply) {
+	this.redis.get(userId, function(err, data) {
 		if(err) {
 			throw err;
 		}
-		callback(reply);
+		callback(data);
+	});
+};
+
+Store.prototype.getGames = function(callback) {
+	return this.redis.lrange('games', 0, -1, function(err, data) {
+		if(err) {
+			throw err;
+		}
+		callback(data);
 	});
 };
 
@@ -25,3 +34,5 @@ Store.prototype.info = function() {
 };
 
 module.exports = Store;
+
+//this.redis.lpush('games', 'samm');
