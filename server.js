@@ -5,27 +5,50 @@ var isProduction = (process.env.NODE_ENV === 'production'),
     port = (isProduction ? 80 : 8000),
     uuid = require('node-uuid'),
     meta = require('./meta'),
-    nko = require('nko')('1Te9Gvwfrmm8qZKH');
+    nko = require('nko')('1Te9Gvwfrmm8qZKH'),
+    dust = require('express-dust/lib/dust');
+;
 
 
 var app = express(), 
-    server = http.createServer(app), 
+    server = http.createServer(app),
     io = io.listen(server);
 
-app.use(express.cookieParser());
-app.use(express.logger());
-app.use(express.static(__dirname + '/public'));
-app.use(app.router);
+app.configure(function() {
+  app.use(express.cookieParser());
+  app.use(express.logger());
+  app.use(express.static(__dirname + '/public'));
+  app.use(app.router);
 
+  // assign the dust engine to .dust files
+ // app.engine('dust', cons.dust);
+  app.set('view engine', 'dust');
+  app.set('views', __dirname + '/public/views');
+});
 
-app.get('/', function(req, res) {
+app.get('/', function(req, res, next) {
+  //retrieve user id
+  var userId = req.cookies[meta.userId] || 0;
   if(req.cookies[meta.userId]) {
     res.send("userId cookie found: " + req.cookies[meta.userId]);
   }
-  else {
-    res.cookie(meta.userId, uuid.v4(), { maxAge: 90000000, httpOnly: false});
-    res.send("userId cookie not found: just set a new one");
-  }
+
+  res.render('index', {
+    userId: userId
+  });
+
+  // if found dont display form
+  // else display form
+});
+
+app.get('/create', function(req, res) {
+  // create user id and store 
+  res.cookie(meta.userId, uuid.v4());
+  res.send("just set a new cookie");
+});
+
+app.get('/join', function(req, res) {
+  res.send('join game');
 });
 
 app.get('/clear', function(req, res) {
@@ -33,28 +56,11 @@ app.get('/clear', function(req, res) {
   res.redirect('/');
 });
 
-
 io.sockets.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {
     console.log(data);
   });
-});
-
-app.get('/', function(req, res) {
-  var gameid = req.cookies.gameid;
-  
-  res.send('gameid: ' + gameid);
-  console.log('gameid: ' + gameid);
-});
-
-app.get('/createGame', function(req, res) {
-  // create game id and store 
-  res.cookie('gameid', req.cookies.gameid+1 || 5000 );
-});
-
-app.get('/join', function(req, res) {
-  res.send('join game');
 });
 
 server.listen(port);

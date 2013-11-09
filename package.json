@@ -14,7 +14,8 @@
     "nko": "*",
     "express": "3.4.4",
     "socket.io": "0.9.16",
-    "node-uuid": "*"
+    "node-uuid": "*",
+    "express-dust": "*"
   },
   "engines": {
     "node": "0.10.x"
