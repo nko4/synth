@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function(store) {
 
   var isProduction = (process.env.NODE_ENV === 'production'),
       http = require('http'),
