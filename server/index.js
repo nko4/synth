@@ -33,7 +33,7 @@ module.exports = function(store) {
     app.post('/user', user.post);    
 
     app.get('/games', function(req, res) {
-        store.getGames(function(games) {
+        store.getGamesReadyToPlay(function(games) {
             res.json(200, {
                 games: games
             });

@@ -20,12 +20,27 @@ Store.prototype.deleteUser = function(userId) {
 	this.redis.del(userId);
 };
 
-Store.prototype.getGames = function(callback) {
+Store.prototype.getGamesReadyToPlay = function(callback) {
     this.redis.hvals('games', function (err, data) {
     	if(err) {
     		throw err;
     	}
-        callback(data.map(JSON.parse));
+    	var gamesWithoutJoinedBy = data.map(JSON.parse).filter(function(game) {
+    		return !game.joined_by;
+    	});
+        callback(gamesWithoutJoinedBy);
+    });	
+};
+
+Store.prototype.getGamesBeingPlayed = function(callback) {
+    this.redis.hvals('games', function (err, data) {
+    	if(err) {
+    		throw err;
+    	}
+    	var gamesWithJoinedBy = data.map(JSON.parse).filter(function(game) {
+    		return !!game.joined_by;
+    	});
+        callback(gamesWithJoinedBy);
     });	
 };
 
