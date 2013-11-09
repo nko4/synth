@@ -90,8 +90,4 @@ Store.prototype.setSocketForUser = function(sockedId, userId) {
 	});
 };
 
-Store.prototype.info = function() {
-	return this.redis.server_info;
-};
-
 module.exports = Store;

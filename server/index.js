@@ -9,7 +9,7 @@ module.exports = function(store) {
         cons = require('consolidate'),
         meta = require('../meta'),
         uuid = require('node-uuid'),
-        cookie = require('cookie'),
+        sockets = require('./sockets'),
         user = require('./user');
 
     var app = express(), 
@@ -84,19 +84,10 @@ module.exports = function(store) {
         });
     });    
 
-    io.sockets.on('connection', function (socket) {
 
-        if(socket.handshake.headers.cookie) {
-            var userId = cookie.parse(socket.handshake.headers.cookie)[meta.userId];
-            store.setSocketForUser(socket.id, userId);        
-        }
-
-        socket.on('disconnect', function () {
-            //io.sockets.emit('user disconnected');
-        });    
-    });
-
+    sockets.setup(io, store);
     server.listen(port);
+
     console.log('Server running at http://0.0.0.0:' + port + '/');
 
 };
