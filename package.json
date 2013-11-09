@@ -4,7 +4,7 @@
   "description": "synth",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js duster.js"
   },
   "repository": {
     "type": "git",
