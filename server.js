@@ -1,11 +1,11 @@
-// https://github.com/nko4/website/blob/master/module/README.md#nodejs-knockout-deploy-check-ins
-require('nko')('1Te9Gvwfrmm8qZKH');
-
 var isProduction = (process.env.NODE_ENV === 'production'),
     http = require('http'),
     express = require('express'),
     io = require('socket.io'),
-    port = (isProduction ? 80 : 8000);
+    port = (isProduction ? 80 : 8000),
+    uuid = require('node-uuid'),
+    meta = require('./meta'),
+    nko = require('nko')('1Te9Gvwfrmm8qZKH');
 
 
 var app = express(), 
@@ -15,6 +15,23 @@ var app = express(),
 app.use(express.cookieParser());
 app.use(express.logger());
 app.use(express.static(__dirname + '/public'));
+
+
+app.get('/', function(req, res) {
+  if(req.cookies[meta.userId]) {
+    res.send("userId cookie found: " + req.cookies[meta.userId]);
+  }
+  else {
+    res.cookie(meta.userId, uuid.v4(), { maxAge: 90000000, httpOnly: false});
+    res.send("userId cookie not found: just set a new one");
+  }
+});
+
+app.get('/clear', function(req, res) {
+  res.clearCookie(meta.userId); 
+  res.redirect('/');
+});
+
 
 io.sockets.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
