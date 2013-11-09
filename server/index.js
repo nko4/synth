@@ -57,23 +57,24 @@ module.exports = function(store) {
         //TODO: handle unauth users
         var gameId = uuid.v1();
         var userId = req.cookies[meta.userId];
-        store.createGame(gameId, userId, function() {
-            res.json(200, {});
+        store.createGame(gameId, userId, function(game) {
+            res.json(200, game);
         });
     });  
 
     app.post('/game/join/:gameId', function(req, res) {
         //TODO: handle unauth users
         var userId = req.cookies[meta.userId];
-        store.joinGame(req.params.gameId, userId, function() {
-            res.json(200, {});
+        store.joinGame(req.params.gameId, userId, function(game) {
+            res.json(200, game);
         });
     });    
 
     app.get('/clear', function(req, res) {
         res.clearCookie(meta.userId);
-        store.deleteUser(req.cookies[meta.userId]);
-        res.redirect('/');
+        store.deleteUser(req.cookies[meta.userId], function() {
+            res.redirect('/');
+        });
     });
 
     io.sockets.on('connection', function (socket) {
