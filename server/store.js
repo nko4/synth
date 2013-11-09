@@ -25,7 +25,7 @@ Store.prototype.getGames = function(callback) {
     	if(err) {
     		throw err;
     	}
-        callback(data);
+        callback(data.map(JSON.parse));
     });	
 };
 
