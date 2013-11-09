@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Baloon Arrow GAME!!!</title>
+<h2>Welcome Guys!</h2>
+<link rel="stylesheet" href="css/style.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+
+<script src="js/vendor/custom.modernizr.js"></script>
+
+</head>
+
+<body>
+
+	<div id = "register" class="hide">
+		<p>User not found</p>
+		<form id="registerForm">
+			<input name="name" placeholder="Enter your Name" autocorrect="off" value="" />
+			
+			<button type="submit" id="registerBtn" class="">Register</button>		
+		</form>
+	</div>
+
+	<div id = 'dashboardWrapper' class="hide">
+		<div id = "dashboard">
+			<p>{name}</p>
+		</div>
+	</div>
+
+<script src="js/lib/jquery.min.js"></script>
+<script src="js/lib/dust-core-1.0.0.js"></script>
+<script src="js/main.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

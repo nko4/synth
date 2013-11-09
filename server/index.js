@@ -5,7 +5,6 @@ module.exports = function(store) {
         express = require('express'),
         io = require('socket.io'),
         port = (isProduction ? 80 : 8000),
-        uuid = require('node-uuid'),
         engines = require('consolidate'),
         meta = require('../meta'),
         uuid = require('node-uuid'),
@@ -29,6 +28,10 @@ module.exports = function(store) {
     app.engine('dust', engines.dust);
     app.set('views', './public/views');
     app.set('view engine', 'dust');
+
+    app.get('/', function(req, res, next) {
+        res.render('master');
+    });
 
     app.get('/user', user.get);
     app.post('/user', user.post);    
