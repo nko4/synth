@@ -15,7 +15,8 @@
     "express": "3.4.4",
     "socket.io": "0.9.16",
     "node-uuid": "*",
-    "express-dust": "*"
+    "express-dust": "*",
+    "redis": "*"
   },
   "engines": {
     "node": "0.10.x"
