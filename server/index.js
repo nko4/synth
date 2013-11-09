@@ -5,14 +5,14 @@ module.exports = function(store) {
         express = require('express'),
         io = require('socket.io'),
         port = (isProduction ? 80 : 8000),
-        meta = require('../meta'),
+        uuid = require('node-uuid'),
+        engines = require('consolidate'),
+        meta = require('../meta');
         user = require('./user');
-
 
     var app = express(), 
         server = http.createServer(app), 
         io = io.listen(server);
-
 
     app.use(function(req, res, next) {
         req.store = store;
@@ -25,9 +25,9 @@ module.exports = function(store) {
     app.use(express.static('./public'));
     app.use(app.router);
 
-    app.set('view engine', 'jade');
+    app.engine('dust', engines.dust);
     app.set('views', './public/views');
-
+    app.set('view engine', 'dust');
 
     app.get('/user', user.get);
     app.post('/user', user.post);    
