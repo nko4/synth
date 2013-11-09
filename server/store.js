@@ -81,6 +81,14 @@ Store.prototype.deleteAll = function(callback) {
 	});
 };
 
+Store.prototype.setSocketForUser = function(sockedId, userId) {
+	this.userCollection.update({userId: userId}, {$set: {sockedId: sockedId }}, function(err) {
+		if(err) {
+			throw err;
+		}
+		console.dir("updated socketId for User: " + userId);
+	});
+};
 
 Store.prototype.info = function() {
 	return this.redis.server_info;

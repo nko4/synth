@@ -9,6 +9,7 @@ module.exports = function(store) {
         cons = require('consolidate'),
         meta = require('../meta'),
         uuid = require('node-uuid'),
+        cookie = require('cookie'),
         user = require('./user');
 
     var app = express(), 
@@ -84,10 +85,15 @@ module.exports = function(store) {
     });    
 
     io.sockets.on('connection', function (socket) {
-        socket.emit('news', { hello: 'world' });
-        socket.on('my other event', function (data) {
-            console.log(data);
-        });
+
+        if(socket.handshake.headers.cookie) {
+            var userId = cookie.parse(socket.handshake.headers.cookie)[meta.userId];
+            store.setSocketForUser(socket.id, userId);        
+        }
+
+        socket.on('disconnect', function () {
+            //io.sockets.emit('user disconnected');
+        });    
     });
 
     server.listen(port);

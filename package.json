@@ -19,7 +19,8 @@
     "dustjs-helpers": "*",
     "consolidate": "*",
     "watch": "*",
-    "mongodb": "*"
+    "mongodb": "*",
+    "cookie": "*"
   },
   "engines": {
     "node": "0.10.x"
