@@ -1,24 +1,42 @@
-var Store = function(redis) {
+var Store = function(db) {
 
-	this.redis = redis;
+	this.db = db;
+	this.userCollection = db.collection("users");
+	this.gameCollection = db.collection("games");
 };
 
-Store.prototype.setUser = function(userId, name) {
-	this.redis.set(userId, name);
-};
-
-Store.prototype.getUser = function(userId, callback) {
-	this.redis.get(userId, function(err, data) {
-		if(err) {
-			throw err;
-		}
-		callback(data);
+Store.prototype.setUser = function(userId, name, callback) {
+	var user = {
+		userId: userId,
+		name: name
+	};
+	this.userCollection.insert(user, function (err, inserted) {
+		if(err) throw err;
+		callback();
 	});
 };
 
-Store.prototype.deleteUser = function(userId) {
-	this.redis.del(userId);
+Store.prototype.getUser = function(userId, callback) {
+	this.userCollection.find({userId: userId}).toArray(function(err, results) {
+		if(err) throw err;
+		callback(results.length ? results[0] : undefined);
+	});
 };
+
+Store.prototype.deleteUser = function(userId, callback) {
+	this.userCollection.remove({userId: userId}, function(err, results) {
+		if(err) throw err;
+		callback(results);
+	});
+};
+
+
+
+
+
+
+
+
 
 Store.prototype.getGamesReadyToPlay = function(callback) {
     this.redis.hvals('games', function (err, data) {

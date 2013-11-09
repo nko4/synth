@@ -16,7 +16,7 @@
     "socket.io": "0.9.16",
     "node-uuid": "*",
     "consolidate": "*",
-    "redis": "*"
+    "mongodb": "*"
   },
   "engines": {
     "node": "0.10.x"

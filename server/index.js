@@ -68,8 +68,9 @@ module.exports = function(store) {
 
     app.get('/clear', function(req, res) {
         res.clearCookie(meta.userId);
-        store.deleteUser(req.cookies[meta.userId]);
-        res.redirect('/');
+        store.deleteUser(req.cookies[meta.userId], function() {
+            res.redirect('/');
+        });
     });
 
     io.sockets.on('connection', function (socket) {

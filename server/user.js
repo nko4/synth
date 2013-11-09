@@ -31,8 +31,9 @@ exports.post = function(req, res) {
             if(name) {
                 var userId = uuid.v4();
                 res.cookie(meta.userId, userId);
-                req.store.setUser(userId, name);
-                res.json(200, {});
+                req.store.setUser(userId, name, function() {
+                    res.json(200, {});
+                });
             }
             else {
                 res.json(400, {
