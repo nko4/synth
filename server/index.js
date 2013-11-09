@@ -6,6 +6,7 @@ module.exports = function(store) {
         io = require('socket.io'),
         port = (isProduction ? 80 : 8000),
         uuid = require('node-uuid'),
+        engines = require('consolidate'),
         meta = require('../meta');
 
 
@@ -13,21 +14,20 @@ module.exports = function(store) {
         server = http.createServer(app), 
         io = io.listen(server);
 
-
+    
     app.use(express.cookieParser());
     app.use(express.logger());
     app.use(express.static(__dirname + '/public'));
     app.use(app.router);
 
-    app.set('view engine', 'jade');
+    app.engine('dust', engines.dust);
     app.set('views', './public/views');
+    app.set('view engine', 'dust');
+
 
     app.get('/', function(req, res, next) {
         //retrieve user id
         var userId = req.cookies[meta.userId] || 0;
-        if(req.cookies[meta.userId]) {
-        res.send("userId cookie found: " + req.cookies[meta.userId]);
-        }
 
         res.render('index', {
             userId: userId
