@@ -3,11 +3,9 @@ var meta = require('../meta'),
 
 exports.get = function(req, res) {
     var userId = req.cookies[meta.userId];
-    req.store.getUser(userId, function(name) {
-        if(name) {
-            res.json(200, {
-                name: name
-            });
+    req.store.getUser(userId, function(user) {
+        if(user) {
+            res.json(200, user);
         }
         else {
             res.clearCookie(meta.userId);

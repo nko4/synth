@@ -81,12 +81,24 @@ Store.prototype.deleteAll = function(callback) {
 	});
 };
 
-Store.prototype.setSocketForUser = function(sockedId, userId) {
-	this.userCollection.update({userId: userId}, {$set: {sockedId: sockedId }}, function(err) {
+Store.prototype.setSocketForUser = function(socketId, userId) {
+	this.userCollection.update({userId: userId}, {$set: {socketId: socketId }}, function(err) {
 		if(err) {
 			throw err;
 		}
 		console.dir("updated socketId for User: " + userId);
+	});
+};
+
+Store.prototype.getSocketForUser = function(userId, callback) {
+	this.userCollection.find({userId: userId}).toArray(function(err, results) {
+		if(err) throw err;
+		
+		var socketId;
+		if(results.length && results[0].socketId) {
+			socketId = results[0].socketId;
+		}
+		callback(socketId);	
 	});
 };
 
