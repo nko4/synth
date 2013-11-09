@@ -1,0 +1,20 @@
+{@useContent map="MS=mobilemerchant.V2Master"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Baloon Arrow GAME!!!</title>
+<h1>Welcome Guys!<h1>
+</head>
+<body>
+
+{@if cond="'{userId}' == '0'"}
+	<p>User not found</p>
+{:else}
+	<p>User found: {userId}</p>
+{/if}
+<script src="../index.js"></script>
+
+</body>
+</html>
+{/useContent}
+	
