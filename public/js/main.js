@@ -88,8 +88,12 @@ var Application = {
 
 Application.init();
 
-var socket = io.connect('http://localhost');
-socket.on('news', function (data) {
-	console.log(data);
-	socket.emit('my other event', { my: 'data' });
+var socket = io.connect('/');
+socket.on('startGame', function (game) {
+	console.log("startGame");
+	console.log(game);
+});
+
+socket.on('registeredUser', function () {
+	console.log("registeredUser");
 });

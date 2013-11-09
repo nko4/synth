@@ -65,11 +65,15 @@ Store.prototype.createGame = function(gameId, userId, callback) {
 };
 
 Store.prototype.joinGame = function(gameId, userId, callback) {
-	this.gameCollection.update({gameId: gameId}, {$set: {joinedBy: userId }}, function(err, game) {
+	var self = this;
+	self.gameCollection.update({gameId: gameId}, {$set: {joinedBy: userId }}, function(err) {
 		if(err) {
 			throw err;
 		}
-		callback(game);
+		self.gameCollection.find({gameId: gameId}).toArray(function(err, results) {
+			if(err) throw err;
+			callback(results.length ? results[0] : undefined);
+		});	
 	});
 };
 
@@ -100,7 +104,6 @@ Store.prototype.setSocketForUser = function(socketId, userId) {
 Store.prototype.getSocketForUser = function(userId, callback) {
 	this.userCollection.find({userId: userId}).toArray(function(err, results) {
 		if(err) throw err;
-
 		var socketId;
 		if(results.length && results[0].socketId) {
 			socketId = results[0].socketId;
