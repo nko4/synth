@@ -16,17 +16,47 @@ Store.prototype.getUser = function(userId, callback) {
 	});
 };
 
+Store.prototype.deleteUser = function(userId) {
+	this.redis.del(userId);
+};
+
 Store.prototype.getGames = function(callback) {
-	return this.redis.lrange('games', 0, -1, function(err, data) {
+    this.redis.hvals('games', function (err, data) {
+    	if(err) {
+    		throw err;
+    	}
+        callback(data);
+    });	
+};
+
+Store.prototype.createGame = function(gameId, userId, callback) {
+	var game = {
+		id: gameId,
+		created_by: userId
+	};
+
+	this.redis.hset('games', game.id, JSON.stringify(game), function(err) {
 		if(err) {
 			throw err;
 		}
-		callback(data);
 	});
 };
 
-Store.prototype.deleteUser = function(userId) {
-	this.redis.del(userId);
+Store.prototype.joinGame = function(gameId, userId, callback) {
+	var self = this;
+	this.redis.hget('games', gameId, function(err, data) {
+		if(err) {
+			throw err;
+		}
+		var game = JSON.parse(data);
+		game.joined_by = userId;
+		self.redis.hset('games', game.id, JSON.stringify(game), function(err, reply) {
+			if(err) {
+				throw err;
+			}
+			callback(reply);
+		});
+	});
 };
 
 Store.prototype.info = function() {
