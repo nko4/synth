@@ -54,6 +54,7 @@ Store.prototype.createGame = function(gameId, userId, callback) {
 		if(err) {
 			throw err;
 		}
+		callback();
 	});
 };
 

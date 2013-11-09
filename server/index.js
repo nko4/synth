@@ -7,7 +7,8 @@ module.exports = function(store) {
         port = (isProduction ? 80 : 8000),
         uuid = require('node-uuid'),
         engines = require('consolidate'),
-        meta = require('../meta');
+        meta = require('../meta'),
+        uuid = require('node-uuid'),
         user = require('./user');
 
     var app = express(), 
@@ -32,7 +33,7 @@ module.exports = function(store) {
     app.get('/user', user.get);
     app.post('/user', user.post);    
 
-    app.get('/games', function(req, res) {
+    app.get('/games/ready', function(req, res) {
         store.getGamesReadyToPlay(function(games) {
             res.json(200, {
                 games: games
@@ -40,11 +41,30 @@ module.exports = function(store) {
         });
     });
 
+    app.get('/games/started', function(req, res) {
+        store.getGamesBeingPlayed(function(games) {
+            res.json(200, {
+                games: games
+            });
+        });
+    });    
 
+    app.post('/game/start', function(req, res) {
+        //TODO: handle unauth users
+        var gameId = uuid.v1();
+        var userId = req.cookies[meta.userId];
+        store.createGame(gameId, userId, function() {
+            res.json(200, {});
+        });
+    });  
 
-    app.get('/join', function(req, res) {
-        res.send('join game');
-    });
+    app.post('/game/join/:gameId', function(req, res) {
+        //TODO: handle unauth users
+        var userId = req.cookies[meta.userId];
+        store.joinGame(req.params.gameId, userId, function() {
+            res.json(200, {});
+        });
+    });    
 
     app.get('/clear', function(req, res) {
         res.clearCookie(meta.userId);
