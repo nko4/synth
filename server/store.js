@@ -66,6 +66,21 @@ Store.prototype.joinGame = function(gameId, userId, callback) {
 	});
 };
 
+Store.prototype.deleteAll = function(callback) {
+	var self = this;
+	self.gameCollection.remove(function(err) {
+		if(err) {
+			throw err;
+		}
+		self.userCollection.remove(function(err) {
+			if(err) {
+				throw err;
+			}
+			callback();
+		});
+	});
+};
+
 
 Store.prototype.info = function() {
 	return this.redis.server_info;
