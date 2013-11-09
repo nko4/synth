@@ -39,7 +39,8 @@ module.exports = function(store) {
     app.post('/user', user.post);    
 
     app.get('/games/ready', function(req, res) {
-        store.getGamesReadyToPlay(function(games) {
+        var userId = req.cookies[meta.userId];
+        store.getGamesReadyToPlay(userId, function(games) {
             res.json(200, {
                 games: games
             });

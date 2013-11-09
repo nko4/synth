@@ -30,10 +30,17 @@ Store.prototype.deleteUser = function(userId, callback) {
 	});
 };
 
-Store.prototype.getGamesReadyToPlay = function(callback) {
-    this.gameCollection.find({joinedBy: {$exists: false}}).toArray(function(err, results) {
-		if(err) throw err;
-		callback(results);
+Store.prototype.getGamesReadyToPlay = function(userId, callback) {
+    this.gameCollection.find({
+    				joinedBy: {
+    					$exists: false
+    				}, 
+    				createdBy: {
+    					$ne: userId
+    				}
+    			}).toArray(function(err, results) {
+					if(err) throw err;
+					callback(results);
 	});
 };
 
@@ -93,7 +100,7 @@ Store.prototype.setSocketForUser = function(socketId, userId) {
 Store.prototype.getSocketForUser = function(userId, callback) {
 	this.userCollection.find({userId: userId}).toArray(function(err, results) {
 		if(err) throw err;
-		
+
 		var socketId;
 		if(results.length && results[0].socketId) {
 			socketId = results[0].socketId;
