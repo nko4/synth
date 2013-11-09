@@ -80,5 +80,3 @@ Store.prototype.info = function() {
 };
 
 module.exports = Store;
-
-//this.redis.lpush('games', 'samm');
