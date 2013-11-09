@@ -25,21 +25,28 @@ module.exports = function(store) {
 
 
 
-    app.get('/', function(req, res, next) {
-        //retrieve user id
-        var userId = req.cookies[meta.userId] || 0;
-        if(req.cookies[meta.userId]) {
-        res.send("userId cookie found: " + req.cookies[meta.userId]);
-        }
-
-        res.render('index', {
-            userId: userId
+    app.get('/', function(req, res) {
+        var userId = req.cookies[meta.userId];
+        store.getUser(userId, function(name) {
+            if(name) {
+                res.send("Registered User found: " + name);
+            }
+            else {
+                res.send("Not a registered user.");
+            }
         });
     });
 
+    app.post('/register/:name', function(req, res) {
+        var userId = uuid.v4();
+        res.cookie(meta.userId, userId);
+        store.setUser(userId, req.params.name);
+        res.send(userId + " : " + req.params.name);
+    });    
+
     app.get('/create', function(req, res) {
         // create user id and store 
-        res.cookie(meta.userId, uuid.v4());
+        ;
         res.send("just set a new cookie");
     });
 
@@ -48,7 +55,8 @@ module.exports = function(store) {
     });
 
     app.get('/clear', function(req, res) {
-        res.clearCookie(meta.userId); 
+        res.clearCookie(meta.userId);
+        store.deleteUser(req.cookies[meta.userId]);
         res.redirect('/');
     });
 
