@@ -12,7 +12,9 @@ var app = express(),
     server = http.createServer(app), 
     io = io.listen(server);
 
-server.listen(port);
+app.use(express.cookieParser());
+app.use(express.logger());
+app.use(express.static(__dirname + '/public'));
 
 io.sockets.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
@@ -21,4 +23,5 @@ io.sockets.on('connection', function (socket) {
   });
 });
 
+server.listen(port);
 console.log('Server running at http://0.0.0.0:' + port + '/');
