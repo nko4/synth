@@ -8,35 +8,33 @@ module.exports = function(store) {
         uuid = require('node-uuid'),
         engines = require('consolidate'),
         meta = require('../meta');
-
+        user = require('./user');
 
     var app = express(), 
         server = http.createServer(app), 
         io = io.listen(server);
 
-    
+    app.use(function(req, res, next) {
+        req.store = store;
+        next();
+    });          
+
     app.use(express.cookieParser());
+    app.use(express.bodyParser());
     app.use(express.logger());
-    app.use(express.static(__dirname + '/public'));
+    app.use(express.static('./public'));
     app.use(app.router);
 
     app.engine('dust', engines.dust);
     app.set('views', './public/views');
     app.set('view engine', 'dust');
 
-
-    app.get('/', function(req, res, next) {
-        //retrieve user id
-        var userId = req.cookies[meta.userId] || 0;
-
-        res.render('index', {
-            userId: userId
-        });
-    });
+    app.get('/user', user.get);
+    app.post('/user', user.post);    
 
     app.get('/create', function(req, res) {
         // create user id and store 
-        res.cookie(meta.userId, uuid.v4());
+        ;
         res.send("just set a new cookie");
     });
 
@@ -45,7 +43,8 @@ module.exports = function(store) {
     });
 
     app.get('/clear', function(req, res) {
-        res.clearCookie(meta.userId); 
+        res.clearCookie(meta.userId);
+        store.deleteUser(req.cookies[meta.userId]);
         res.redirect('/');
     });
 
