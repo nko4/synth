@@ -10,6 +10,7 @@ module.exports = function(store) {
         meta = require('../meta'),
         uuid = require('node-uuid'),
         sockets = require('./sockets'),
+        Play = require('./play'),
         user = require('./user');
 
     var app = express(), 
@@ -18,6 +19,7 @@ module.exports = function(store) {
 
     app.use(function(req, res, next) {
         req.store = store;
+        //TODO: handle unauth users
         next();
     });          
 
@@ -65,10 +67,13 @@ module.exports = function(store) {
     });  
 
     app.post('/game/join/:gameId', function(req, res) {
-        //TODO: handle unauth users
         var userId = req.cookies[meta.userId];
         store.joinGame(req.params.gameId, userId, function(game) {
-            res.json(200, game);
+            var play = new Play(game, sockets);
+            play.start();
+            res.json(200, {
+                gameId: req.params.gameId
+            });
         });
     });    
 
