@@ -6,7 +6,6 @@ module.exports = function(store) {
         io = require('socket.io'),
         port = (isProduction ? 80 : 8000),
         uuid = require('node-uuid'),
-        dust = require('express-dust/lib/dust'),
         meta = require('../meta');
 
 
@@ -20,10 +19,8 @@ module.exports = function(store) {
     app.use(express.static(__dirname + '/public'));
     app.use(app.router);
 
-    app.set('view engine', 'dust');
-    app.set('views', __dirname + '/public/views');
-
-
+    app.set('view engine', 'jade');
+    app.set('views', './public/views');
 
     app.get('/', function(req, res) {
         var userId = req.cookies[meta.userId];
