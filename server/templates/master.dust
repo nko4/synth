@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
 
 <script src="js/vendor/custom.modernizr.js"></script>
+<script src="js/lib/socket.io.js"></script>
 
 </head>
 
