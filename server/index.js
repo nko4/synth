@@ -29,6 +29,7 @@ module.exports = function(store) {
                 res.send("Registered User found: " + name);
             }
             else {
+                res.clearCookie(meta.userId);
                 res.send("Not a registered user.");
             }
         });
