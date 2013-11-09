@@ -1,0 +1,4 @@
+<div id = "userInfo">
+	<p>Registered user: <b>{name}</b></p>
+	<button id='startGameBtn'>Start Game</button>
+</div>

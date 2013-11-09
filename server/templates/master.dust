@@ -5,10 +5,9 @@
 	<title>Baloon Arrow GAME!!!</title>
 	<h2>Welcome Guys!</h2>
 	<link rel="stylesheet" href="css/style.css">
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
 	<!-- Optional theme -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.css">
 </head>
 
 <body>
@@ -19,15 +18,19 @@
 			<button type="submit" id="registerBtn" class="">Register</button>		
 		</form>
 	</div>
-	<div id = 'dashboardWrapper' class="hide">
-		
+	<div id = 'dashboard' class="hide">
+		<div id = 'userInfoWrapper' class="">
+		</div>
+
+		<div id = 'gamesInfoWrapper' class="">
+		</div>
 	</div>
 
 	<script src="js/lib/socket.io.js"></script>
 	<script src="js/lib/jquery.min.js"></script>
 	<script src="js/lib/dust-core-2.2.0.js"></script>
-	<script src="views/dashboard.js"></script>
-	<script src="views/master.js"></script>
+	<script src="views/userInfo.js"></script>
+	<script src="views/gamesInfo.js"></script>
 	<script src="js/main.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>

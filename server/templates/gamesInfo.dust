@@ -1,0 +1,11 @@
+<div id = "gamesInfo">
+	<h2>Join Games</h2>
+	<ul id = "gamesList">
+			{#games}
+				<li role="radio" style="margin-top: 15px;">
+					<button class = "joinBtn" data-id = "{gameId}">Join Game</button>
+				</li>
+			{/games}
+		</ul>
+	<ul>
+</div>

@@ -1,3 +1,0 @@
-<div id = "dashboard">
-	<p>Registered user: <b>{uname}</b></p>
-</div>
