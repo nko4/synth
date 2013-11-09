@@ -30,68 +30,42 @@ Store.prototype.deleteUser = function(userId, callback) {
 	});
 };
 
-
-
-
-
-
-
-
-
 Store.prototype.getGamesReadyToPlay = function(callback) {
-    this.redis.hvals('games', function (err, data) {
-    	if(err) {
-    		throw err;
-    	}
-    	var gamesWithoutJoinedBy = data.map(JSON.parse).filter(function(game) {
-    		return !game.joined_by;
-    	});
-        callback(gamesWithoutJoinedBy);
-    });	
+    this.gameCollection.find({joinedBy: {$exists: false}}).toArray(function(err, results) {
+		if(err) throw err;
+		callback(results);
+	});
 };
 
 Store.prototype.getGamesBeingPlayed = function(callback) {
-    this.redis.hvals('games', function (err, data) {
-    	if(err) {
-    		throw err;
-    	}
-    	var gamesWithJoinedBy = data.map(JSON.parse).filter(function(game) {
-    		return !!game.joined_by;
-    	});
-        callback(gamesWithJoinedBy);
-    });	
+    this.gameCollection.find({joinedBy: {$exists: true}}).toArray(function(err, results) {
+		if(err) throw err;
+		callback(results);
+	});
 };
 
 Store.prototype.createGame = function(gameId, userId, callback) {
 	var game = {
-		id: gameId,
-		created_by: userId
+		gameId: gameId,
+		createdBy: userId
 	};
-
-	this.redis.hset('games', game.id, JSON.stringify(game), function(err) {
+	this.gameCollection.insert(game, function(err, game) {
 		if(err) {
 			throw err;
 		}
-		callback();
+		callback(game);
 	});
 };
 
 Store.prototype.joinGame = function(gameId, userId, callback) {
-	var self = this;
-	this.redis.hget('games', gameId, function(err, data) {
+	this.gameCollection.update({gameId: gameId}, {$set: {joinedBy: userId }}, function(err, game) {
 		if(err) {
 			throw err;
 		}
-		var game = JSON.parse(data);
-		game.joined_by = userId;
-		self.redis.hset('games', game.id, JSON.stringify(game), function(err, reply) {
-			if(err) {
-				throw err;
-			}
-			callback(reply);
-		});
+		callback(game);
 	});
 };
+
 
 Store.prototype.info = function() {
 	return this.redis.server_info;
