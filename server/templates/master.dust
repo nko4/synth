@@ -23,7 +23,7 @@
 						<form id="registerForm">
 							<div class="row">
 							  <div class="col-lg-6">
-							    <div class="input-group well">
+							    <div class="input-group">
 							      <input type="text" class="form-control" name="name" autocorrect="off" value="" placeholder="Name">
 							      <span class="input-group-btn">
 							        <button class="btn btn-primary" type="submit" id="registerBtn" type="button">Start</button>
