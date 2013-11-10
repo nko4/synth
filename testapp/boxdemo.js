@@ -28,16 +28,15 @@
 	 	fixDef.shape = new b2PolygonShape;
 	  	var scale = 30;
  	  	fixDef.shape.SetAsArray([
-		  new b2Vec2(0,0), //(scale*0.966 , scale*0.6),
-		  new b2Vec2(0,40), //(scale*-0.966, scale*0.6),
-		  new b2Vec2(50,20), //(0, scale*-1),
+		  new b2Vec2(0,0), 
+		  new b2Vec2(0,40),
+		  new b2Vec2(50,20),
 		  ]);
- 	  	//bodyDef.bullet =true;    
- 	  	bodyDef.position.x = 0;//(canvaswidth-scale*2)*Math.random()+scale*2;
-	    	bodyDef.position.y = 25;//Math.floor((Math.random()*400)+1);
+   
+ 	  	bodyDef.position.x = 0;
+	    	bodyDef.position.y = 25;
 	    	var body=world.CreateBody(bodyDef);
 	         body.CreateFixture(fixDef);
-	        // body.SetLinearVelocity(new b2Vec2(90,-0.7));
 		
 		// Start dropping some shapes
 		//addArrow();
@@ -46,6 +45,7 @@
 		canvaselem.onclick = function(){ 
 			addArrow();
 		};
+		
 	    //setup debug draw
 	    // This is used to draw the shapes for debugging. Here the main purpose is to 
 	    // verify that the images are in the right location 
@@ -55,7 +55,7 @@
 		
 		//balloons = generateBalloons();
     	
-			z = window.setInterval(update2, 20);//1000 / 600);
+			z = window.setInterval(update2, 25);//1000 / 600);
 
 
 	function addArrow() {
@@ -98,7 +98,7 @@
 		 fixDef.shape = new b2CircleShape(
 			  40 //radius
 		 );
-            	bodyDef.position.x = (canvaswidth*(dropAt/100));
+            	bodyDef.position.x = 25 + Math.floor(canvaswidth*(dropAt/100));
 	    	bodyDef.position.y = canvasheight ;// canvasheight- (scale*Math.random() +scale*2);
 	    	var data = { id: balloonId,
 			    	 type: type,
@@ -113,8 +113,14 @@
 		context.clearRect(0,0,canvaswidth,canvasheight);
 	    	world.ClearForces();
 	    	//console.log(balloons);
+	    	addBalloons();
 	    	processObjects();
-	    	balloons = generateBalloons();
+		
+	 }
+	 function addBalloons(balloons){
+		 if (!balloons){
+		 balloons = generateBalloons();
+		 }
 	    	for (var i=0;i<balloons.length;i++)
 	    	{
 	    		var id = (balloons[i].id);
@@ -122,7 +128,6 @@
 	    		var dropAt = (balloons[i].position);
 				addCircle(id,type,dropAt);
 	    	}
-	    			
 	 }
 	 
 	 function generateBalloons(){
