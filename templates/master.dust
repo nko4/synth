@@ -14,7 +14,7 @@
 	<h2 class="page-header">balloon bursters</h2>
 	<iframe class="vote" src="http://nodeknockout.com/iframe/synth" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
 	<div id="container">
-		<div id="well" class="jumbotron well well-lg" style="width: 75%; margin-top: 10%;">
+		<div id="well" class="jumbotron well well-lg" style="width: 65%; margin-top: 5%;">
 			<div id="register" class="hide">
 				<div class="panel panel-info">
 					<div class="panel-heading">Enter your name to start playing!</div>
