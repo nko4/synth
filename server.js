@@ -21,10 +21,8 @@ WebServer = function(store) {
         user = require('./user');
 
     var app = express(), 
-        server = http.createServer(app), 
-        io = io.listen(server);
+        server = http.createServer(app);
 
-    io.set('log level', 1);
     
     app.use(function(req, res, next) {
         req.store = store;
@@ -116,7 +114,9 @@ WebServer = function(store) {
     });    
 
     server.listen(port);
+    io = io.listen(server);
     sockets.setup(io, store);
+    io.set('log level', 1);
     console.log('Server running at http://0.0.0.0:' + port + '/');
 };
 
