@@ -1,1 +1,0 @@
-(function(){dust.register("dashboard",body_0);function body_0(chk,ctx){return chk.write("<div id = \"dashboard\"><p>Registered user: <b>").reference(ctx._get(false, ["uname"]),ctx,"h").write("</b></p></div>");}return body_0;})();
