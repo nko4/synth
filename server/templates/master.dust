@@ -34,11 +34,16 @@
 		</div>
 
 		<div id='dashboard' class="hide">
-			<div id='userInfoWrapper'></div>
-			<div id='gamesInfoWrapper'></div>
+			<div class="panel panel-success">
+				<div id='userInfoWrapper' class="panel-heading"></div>
+				<div class="panel-body">
+					<div id='gamesInfoWrapper'></div>
+				</div>
+			</div>
 		</div>
-		
+
 	</div>
+
 	<script src="js/lib/socket.io.js"></script>
 	<script src="js/lib/jquery.min.js"></script>
 	<script src="js/lib/dust-core-2.2.0.js"></script>

@@ -1,16 +1,9 @@
-<div id = "gamesInfo" class="panel panel-default">
-	
-	<div class="panel-heading">Start Playing!</div>
-	<div class="panel-body">
-	   <p>Available Games:</p>
-	</div>
-
-	<ul id = "gamesList" class="list-group">
-			{#games}
-				<li role="radio" class="list-group-item" style="margin-top: 15px;">
-					<button class = "joinBtn " data-id = "{gameId}">Join Game</button>
-				</li>
-			{/games}
-		</ul>
-	<ul>
+<div id="gamesList" class="list-group">
+	{?games}
+	  	<a href="" class="list-group-item active">List of open games - click to start</a>
+		{#games}
+			<a href="" class="list-group-item joinBtn" data-id="{gameId}">Game from a user named </a>
+		{/games}	
+	{/games}
+	<button id='startGameBtn' class = 'btn btn-primary btn-lg'>Start New Game</button>
 </div>
