@@ -14,15 +14,16 @@
 	<h2 class="page-header">balloon bursters</h2>
 	<iframe class="vote" src="http://nodeknockout.com/iframe/synth" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
 	<div id="container">
-		<div id="well" class="well well-lg">
+		<div id="well" class="jumbotron well well-lg" style="width: 75%; margin-top: 10%;">
 			<div id="register" class="hide">
 				<div class="panel panel-info">
-					<div class="panel-heading">Enter your name to get started!</div>
+					<div class="panel-heading">Enter your name to start playing!</div>
 					<div class="panel-body">
+						<p>Two player game, join the fun!</p>
 						<form id="registerForm">
 							<div class="row">
 							  <div class="col-lg-6">
-							    <div class="input-group">
+							    <div class="input-group well">
 							      <input type="text" class="form-control" name="name" autocorrect="off" value="" placeholder="Name">
 							      <span class="input-group-btn">
 							        <button class="btn btn-primary" type="submit" id="registerBtn" type="button">Start</button>
@@ -36,9 +37,10 @@
 			</div>
 
 			<div id='dashboard' class="hide">
-				<div class="panel panel-success">
+				<div class="panel panel-info">
 					<div id='userInfoWrapper' class="panel-heading"></div>
 					<div class="panel-body">
+						<p class="">You can select any of the open games and start playing OR create a new game and ask your friends to join!</p>
 						<div id='gamesInfoWrapper'></div>
 					</div>
 				</div>
