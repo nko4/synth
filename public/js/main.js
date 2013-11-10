@@ -167,6 +167,7 @@ Socket = {
 				alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "\n" +gameResult.nameB+" Scored:" +gameResult.scoreB + "\n\n\nAnd the Winner is: "+gameResult.winner);
 			}
 			$('body').removeClass('clouds').addClass('bg');
+			Application.getGamesInfo();
 			$('#well').show();	
 			$('#game').hide();		
 			console.log("stopGame");
