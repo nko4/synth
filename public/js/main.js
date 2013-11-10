@@ -1,4 +1,5 @@
-var Socket;
+var Socket,
+	gameInstance;
 
 var Application = {
 
@@ -117,11 +118,11 @@ var Application = {
 
 	renderGameView: function(data) {
 		dust.render("game", {}, function(err, out) {
-			var box2dgameObj = new window.box2dgame();
 			$('#well').hide();	
 			$('#game').html(out);
-			alert(err);
-			box2dgameObj.init();
+			setTimeout(function() {
+				gameInstance = new Game();
+			}, 300);		
 		});
 	}
 };
@@ -145,7 +146,7 @@ Socket = {
 
 		socket.on('dropBalloons', function (balloons) {
 			console.log("dropBalloons");
-			console.log(balloons);
+			gameInstance.drop(balloons);
 
 			//simulate baloon burst 
 			var randomBalloon = balloons[Math.floor(Math.random() * balloons.length)];

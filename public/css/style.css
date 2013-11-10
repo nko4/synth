@@ -38,3 +38,8 @@ body {
 	top: 18px;
 	left: 25px;
 }
+
+#canvas {
+	width: 100%;
+	height: 100%;
+}
