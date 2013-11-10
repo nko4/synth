@@ -1,1 +1,1 @@
-(function(){dust.register("game",body_0);function body_0(chk,ctx){return chk.write(" <canvas id=\"canvas\"></canvas>\t");}return body_0;})();
+(function(){dust.register("game",body_0);function body_0(chk,ctx){return chk.write(" <div class=\"alert alert-warning\"><p>Game Controls:</p><p>Shoot Arrow - 'space' key, Move Player - 'up/down' arrow key</p></div><canvas id=\"canvas\"></canvas>\t");}return body_0;})();
