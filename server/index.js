@@ -43,8 +43,11 @@ module.exports = function(store) {
     app.get('/games/ready', function(req, res) {
         var userId = req.cookies[meta.userId];
         store.getGamesReadyToPlay(userId, function(games) {
-            res.json(200, {
-                games: games
+            store.getGameCreatedByUser(userId, function(game) {
+                res.json(200, {
+                    games: games,
+                    userCreatedGame: game
+                });
             });
         });
     });

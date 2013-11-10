@@ -44,7 +44,6 @@ var Application = {
 			$('#userInfo').remove();
 			$('#userInfoWrapper').append(out);
 			$('#dashboard').removeClass('hide').addClass('animated flipInY');
-			_this.initStartGameBtn();
 		});
 	},	
 
@@ -63,9 +62,9 @@ var Application = {
 	renderDashboard: function(gameData) {
 		var _this = this;
 		dust.render("gamesInfo", gameData, function(err, out) {	
-			$('#gamesInfo').remove();
-			$('#gamesInfoWrapper').append(out);
+			$('#gamesInfoWrapper').html(out);
 			$('#dashboard').removeClass('hide');
+			_this.initStartGameBtn();
 			_this.initJoinGameBtn();
 		});
 	},

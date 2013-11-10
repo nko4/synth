@@ -30,6 +30,17 @@ Store.prototype.deleteUser = function(userId, callback) {
 	});
 };
 
+Store.prototype.getGameCreatedByUser = function(userId, callback) {
+    this.gameCollection.find({
+    				createdBy: {
+    					$in: [userId]
+    				}
+    			}).toArray(function(err, results) {
+					if(err) throw err;
+					callback(results.length ? results[0] : undefined);
+	});
+};
+
 Store.prototype.getGamesReadyToPlay = function(userId, callback) {
     this.gameCollection.find({
     				joinedBy: {
