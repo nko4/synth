@@ -3,12 +3,13 @@
 
 <head>
 	<title>balloon bursters</title>
-	<h2>balloon bursters</h2>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
+	<link href='http://fonts.googleapis.com/css?family=Nosifer' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
+	<h2 class="page-header">balloon bursters</h2>
 	<div class="well well-lg">
 		<div id="register" class="hide">
 			<div class="panel panel-primary">

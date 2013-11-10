@@ -1,3 +1,9 @@
 .hide {
 	display: none;
 }
+
+.page-header {
+	font-family: 'Nosifer', cursive;
+	font-size:36px;
+	text-align:center;
+}
