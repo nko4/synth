@@ -179,17 +179,17 @@ function getPosition(whichPlayer){
            	bodyDef.position.x = 25 + Math.floor(canvaswidth*(dropAt/100));
 	    	bodyDef.position.y = canvasheight ;
 	    	var img = "";
-	    	if (type = "0"){
+	    	if (type === 0){
 	    		 img = "../css/playera-balloon.png";
 	    	}
-	    	else if (type = "1"){
+	    	else if (type === 1){
 	    		 img = "../css/playerb-balloon.png";
 	    	}
 	    	var data = { id: balloonId,
 			    	 type: type,
 			    	 imgsrc: img,
 			    	 imgsize: 50,
-				 bodysize: scale
+				 bodysize: 10
 		    	}
 			bodyDef.userData = data;
 	    	world.CreateBody(bodyDef).CreateFixture(fixDef);
