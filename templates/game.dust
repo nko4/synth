@@ -1,1 +1,5 @@
+ <div class="alert alert-warning">
+ 	<p>Game Controls:</p>
+ 	<p>Shoot Arrow - 'space' key, Move Player - 'up/down' arrow key</p>
+ </div>
  <canvas id="canvas"></canvas>	
