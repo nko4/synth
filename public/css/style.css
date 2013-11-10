@@ -2,9 +2,14 @@
 	display: none;
 }
 
-html, body, #container, #game, #canvas {
+html, body {
 	width: 100%;
-	height: 100%;
+	height: 95%;
+}
+
+#canvas, #game, #container {
+	width: 100%;
+	height: 80%;
 }
 
 .page-header {
