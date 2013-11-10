@@ -81,7 +81,7 @@
 		//world.CreateBody(bodyDef).CreateFixture(fixDef);
 	}
 
-	 function addCircle(balloonId) {
+	 function addCircle(balloonId, type, dropAt) {
 		 // create basic circle
          	 var bodyDef = new b2BodyDef;
 		 var fixDef = new b2FixtureDef;
@@ -95,10 +95,12 @@
 		 fixDef.shape = new b2CircleShape(
 			  20 //radius
 		 );
-            	bodyDef.position.x = (canvaswidth-scale*2)*Math.random() + scale*2 + 15;
-	    	bodyDef.position.y = 400 ;// canvasheight- (scale*Math.random() +scale*2);
-	    	
-			bodyDef.userData = balloonId;
+            	bodyDef.position.x = (canvaswidth*(dropAt/100));
+	    	bodyDef.position.y = canvasheight ;// canvasheight- (scale*Math.random() +scale*2);
+	    	var data = { id: balloonId,
+			    	 type: type,
+		    	}
+			bodyDef.userData = data;
 	    	world.CreateBody(bodyDef).CreateFixture(fixDef);
 	 }
 	 
@@ -110,8 +112,8 @@
 	    
 	    	processObjects();
 	    	var M = Math.floor((Math.random()*100)+1);
-	    	if (M < 5) {			
-			addCircle(1234);
+	    	if (M < 2) {			
+			addCircle(1234,1,70);
 			}
 	 }
 
@@ -161,7 +163,7 @@
 						
 							var othershape = other.GetFixtureList().GetShape();
 							if (othershape.GetType() == b2Shape.e_circleShape) {
-								console.log(other.m_userData);
+								console.log(other.m_userData.id);// send to Sam
 								world.DestroyBody(other);
 								break;	
 							 }
@@ -190,7 +192,11 @@
 				 // draw a circle - a solid color, so we don't worry about rotation
 				 else if (shapeType == b2Shape.e_circleShape) {
 					context.strokeStyle = "#CCCCCC";
-					context.fillStyle = "#FF8800";
+					if(b.m_userData.type == '0'){
+						context.fillStyle = "#FF8800";
+					} else{
+						context.fillStyle = "#000000";
+					}
 					context.beginPath();
 					context.arc(position.x,flipy,shape.GetRadius(),0,Math.PI*2,true);
 					context.closePath();
