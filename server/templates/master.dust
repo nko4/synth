@@ -50,8 +50,10 @@
 	<script src="js/lib/socket.io.js"></script>
 	<script src="js/lib/jquery.min.js"></script>
 	<script src="js/lib/dust-core-2.2.0.js"></script>
-	<script src="js/main.js"></script>
 	<script src="js/lib/bootstrap.js"></script>
+	<script src="js/lib/box2dv2.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/box2dgame.js"></script>
 
 	<script src="views/userInfo.js"></script>
 	<script src="views/gamesInfo.js"></script>

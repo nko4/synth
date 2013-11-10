@@ -119,6 +119,7 @@ var Application = {
 		dust.render("game", {}, function(err, out) {
 			$('#well').hide();	
 			$('#game').html(out);
+			window.box2dgame.init();
 		});
 	}
 };

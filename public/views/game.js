@@ -1,1 +1,1 @@
-(function(){dust.register("game",body_0);function body_0(chk,ctx){return chk;}return body_0;})();
+(function(){dust.register("game",body_0);function body_0(chk,ctx){return chk.write(" <canvas id=\"canvas\" width=\"600\" height=\"400\"></canvas>\t");}return body_0;})();
