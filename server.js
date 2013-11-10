@@ -1,7 +1,8 @@
+var nko = require('nko')('1Te9Gvwfrmm8qZKH');
+
 var mongoClient = require('mongodb').MongoClient,
     webserver = require("./server/index"),
-    Store = require("./server/store"),
-    nko = require('nko')('1Te9Gvwfrmm8qZKH');
+    Store = require("./server/store");
 
 
 // if run as root, downgrade to the owner of this file
