@@ -135,7 +135,7 @@ $(document).ready(function() {
 
 Socket = {
 	init: function() {
-		var socket = io.connect('/');
+		var socket = io.connect();
 		socket.on('startGame', function (game) {
 			console.log("startGame");
 			Application.renderGameView();
