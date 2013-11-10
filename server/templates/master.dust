@@ -2,27 +2,26 @@
 <html lang="en">
 
 <head>
-	<title>Baloon Arrow GAME!!!</title>
-	<h2>Welcome Guys!</h2>
+	<title>balloon bursters</title>
+	<h2>balloon bursters</h2>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="css/bootstrap-theme.css">
 </head>
 
 <body>
-	<div id = "register" class="hide">
-		<p>User not found</p>
+	<div id="register" class="hide">
+		<p>Please enter your name to get started!</p>
 		<form id="registerForm">
-			<input name="name" placeholder="Enter your Name" autocorrect="off" value="" />
-			<button type="submit" id="registerBtn" class="">Register</button>		
+			<input name="name" placeholder="name" autocorrect="off" value="" />
+			<button type="submit" id="registerBtn" class="">Start</button>		
 		</form>
 	</div>
-	<div id = 'dashboard' class="hide">
-		<div id = 'userInfoWrapper' class="">
+
+	<div id='dashboard' class="hide">
+		<div id='userInfoWrapper' class="">
 		</div>
 
-		<div id = 'gamesInfoWrapper' class="">
+		<div id='gamesInfoWrapper' class="">
 		</div>
 	</div>
 
