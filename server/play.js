@@ -14,13 +14,17 @@ Play.prototype.start = function() {
 	self.store.getSocketForUser(self.game.createdBy, function(socketId) {		
 		self.playerA = {
 			userId: self.game.createdBy,
-			socketId: socketId
+			name: self.game.createdByName,
+			socketId: socketId,
+			score: 0
 		};
 
 		self.store.getSocketForUser(self.game.joinedBy, function(socketId) {		
 			self.playerB = {
 				userId: self.game.joinedBy,
-				socketId: socketId
+				name: self.game.joinedByName,
+				socketId: socketId,
+				score: 0
 			};
 
 			self.startGame();
@@ -37,12 +41,18 @@ Play.prototype.startGame = function() {
 };
 
 Play.prototype.bootstrapBurst = function() {
-	var self = this;
-	self.io.sockets.socket(self.playerA.socketId).on("didBurst", function(balloonId) {
-		self.io.sockets.socket(self.playerB.socketId).emit("doBurst", balloonId);
+	var self = this, currentScoreA, currentScoreB;
+	self.io.sockets.socket(self.playerA.socketId).on("didBurst", function(balloon) {
+		currentScoreA = self.playerA.score;
+		self.playerA.score = balloon.type == 0 ? currentScoreA + 1 : currentScoreA - 1;
+		console.log(self.playerA.name+" Score:: "+self.playerA.score);
+		self.io.sockets.socket(self.playerB.socketId).emit("doBurst", balloon.id);
 	});
-	self.io.sockets.socket(self.playerB.socketId).on("didBurst", function(balloonId) {
-		self.io.sockets.socket(self.playerA.socketId).emit("doBurst", balloonId);
+	self.io.sockets.socket(self.playerB.socketId).on("didBurst", function(balloon) {
+		currentScoreB = self.playerB.score;
+		self.playerB.score = balloon.type == 1 ? currentScoreB + 1 : currentScoreB - 1;
+		self.io.sockets.socket(self.playerA.socketId).emit("doBurst", balloon.id);
+		console.log(self.playerB.name+" Score:: "+self.playerB.score);
 	});
 };
 
@@ -70,6 +80,7 @@ Play.prototype.run = function() {
 		}
 		else {
 			clearInterval(intervalID);
+			self.game.winner = self.playerA.score > self.playerB.score ? self.playerA.name : self.playerB.name;
 			self.stop();
 		}
 	}, 2000);

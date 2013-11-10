@@ -125,13 +125,14 @@ socket.on('dropBalloons', function (balloons) {
 	//simulate baloon burst 
 	var randomBalloon = balloons[Math.floor(Math.random() * balloons.length)];
 	console.log("didBurst balloonId: " + randomBalloon.id);
-	socket.emit('didBurst', randomBalloon.id);
+	socket.emit('didBurst', randomBalloon);
 });
 
 socket.on('doBurst', function (balloonId) {
 	console.log("doBurst balloonId: " + balloonId);
 });
 
-socket.on('stopGame', function () {
+socket.on('stopGame', function (game) {
+	alert("Winner of thie Game is: "+game.winner)
 	console.log("stopGame");
 });
