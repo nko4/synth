@@ -14,7 +14,7 @@
 	<div class="well well-lg">
 		<div id="register" class="hide jumbotron">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Please enter your name to get started!</div>
+				<div class="panel-heading">Enter your name to get started!</div>
 				<div class="panel-body">
 					<form id="registerForm">
 						<div class="row">

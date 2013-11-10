@@ -15,6 +15,10 @@
 
 }
 
+.panel-heading {
+	text-align: center;
+}
+
 body {
 	background: url('wood.png');
 }
