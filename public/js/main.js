@@ -147,7 +147,7 @@ socket.on('doBurst', function (balloonId) {
 });
 
 socket.on('stopGame', function (gameResult) {
-	alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "		" +gameResult.nameB+" Scored:" +gameResult.scoreB + "And the Winner is: "+gameResult.winner);
+	alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "\n" +gameResult.nameB+" Scored:" +gameResult.scoreB + "\nAnd the Winner is: "+gameResult.winner);
 	console.log("stopGame");
 });
 
