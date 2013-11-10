@@ -43,6 +43,8 @@
 				</div>
 			</div>	
 		</div>
+
+		<div id="game"></div>
 	</div>
 
 	<script src="js/lib/socket.io.js"></script>
