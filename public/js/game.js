@@ -62,15 +62,15 @@ var Game = function() {
   	if(type == "0"){
 	  	fixDef.shape.SetAsArray([
 	  new b2Vec2(0,0), 
-	  new b2Vec2(0,40),
-	  new b2Vec2(50,20),
+	  new b2Vec2(0,10),
+	  new b2Vec2(20,5),
 	  ]);
 	  	bodyDef.position.x = 0;
   	} else if(type =="1"){
   		fixDef.shape.SetAsArray([
   		    new b2Vec2(0,0), 
-  		    new b2Vec2(0,40),
-  		    new b2Vec2(-50,20),
+  		    new b2Vec2(0,10),
+  		    new b2Vec2(-20,5),
   		]);
   	bodyDef.position.x = canvaswidth;
   	}
@@ -100,9 +100,9 @@ function addArrow(type) {
 	  	fixDef.shape.SetAsArray([
 	  new b2Vec2(0,0),
 	  new b2Vec2(0,2),
-	  new b2Vec2(60,1), 
+	  new b2Vec2(50,1), 
 	  ]);    
-	  		bodyDef.position.x = 50;
+	  		bodyDef.position.x = 20;
     	//call addArrow(2);
     	
   	} else if (type =="1"){
@@ -111,9 +111,9 @@ function addArrow(type) {
   		 new b2Vec2(0,2),
   		 new b2Vec2(60,1), 
   		 ]);    
-  		 bodyDef.position.x = canvaswidth -50;
+  		 bodyDef.position.x = canvaswidth -20;
   	}
-  	bodyDef.position.y = arrowPos+20;
+  	bodyDef.position.y = arrowPos+5;
     	var body=world.CreateBody(bodyDef);
          body.CreateFixture(fixDef);
          body.SetLinearVelocity(new b2Vec2(5000,0)); 
@@ -174,7 +174,7 @@ function getPosition(whichPlayer){
 		 bodyDef.type = b2Body.b2_dynamicBody;
 		 scale = 30;
 		 fixDef.shape = new b2CircleShape(
-			  40 //radius
+			  10 //radius
 		 );
            	bodyDef.position.x = 25 + Math.floor(canvaswidth*(dropAt/100));
 	    	bodyDef.position.y = canvasheight ;
@@ -188,7 +188,7 @@ function getPosition(whichPlayer){
 	    	var data = { id: balloonId,
 			    	 type: type,
 			    	 imgsrc: img,
-			    	 imgsize: 16,
+			    	 imgsize: 50,
 				 bodysize: scale
 		    	}
 			bodyDef.userData = data;
@@ -300,7 +300,10 @@ function getPosition(whichPlayer){
 
                         var othershape = other.GetFixtureList().GetShape();
                         if (othershape.GetType() == b2Shape.e_circleShape) {
-                            console.log(other.m_userData.id, other.m_userData.type); // send to Sam
+                        	var balloondata = { id: other.m_userData.id,
+                        			type: other.m_userData.type,
+            		    	}
+                            Socket.didBurst(balloondata);
                             world.DestroyBody(other);
                             break;
                         }
