@@ -1,12 +1,13 @@
 <div class="list-group">
-	{?games}
-	  	<a href="" class="list-group-item active">List of open games - click to start</a>
-	  	<div id="gamesList">
-			{#games}
-				<a href="" class="list-group-item joinBtn" data-id="{gameId}">Compete with {createdByName}</a>
-			{/games}	
-		</div>			
-	{/games}
+	<div id="gamesList">
+		{?games}
+		  	<a href="" class="list-group-item active">List of open games - click to start</a>
+		  	
+				{#games}
+					<a href="" class="list-group-item joinBtn" data-id="{gameId}">Compete with {createdByName}</a>
+				{/games}			
+		{/games}
+	</div>	
 	<div class="progress">
 		<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
 	</div>		
