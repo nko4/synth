@@ -59,8 +59,22 @@ window.box2dgame.prototype.init = function () {
 
     //balloons = generateBalloons();
 
-    z = window.setInterval(box2dgame.update, 20); //1000 / 600);
+    z = window.setInterval(update, 20); //1000 / 600);
 
+    function update() {
+        world.Step(1 / 60, 10, 10);
+        context.clearRect(0, 0, canvaswidth, canvasheight);
+        world.ClearForces();
+        //console.log(balloons);
+        processObjects();
+        balloons = generateBalloons();
+        for (var i = 0; i < balloons.length; i++) {
+            var id = (balloons[i].id);
+            var type = (balloons[i].type);
+            var dropAt = (balloons[i].position);
+            addCircle(id, type, dropAt);
+        }
+    }
 
     function addArrow() {
         //create simple triangle
@@ -219,21 +233,4 @@ window.box2dgame.prototype.init = function () {
     }
 
 };
-
-	// Update the world display and add new objects as appropriate
-window.box2dgame.prototype.update = function update() {
-    world.Step(1 / 60, 10, 10);
-    context.clearRect(0, 0, canvaswidth, canvasheight);
-    world.ClearForces();
-    //console.log(balloons);
-    processObjects();
-    balloons = generateBalloons();
-    for (var i = 0; i < balloons.length; i++) {
-        var id = (balloons[i].id);
-        var type = (balloons[i].type);
-        var dropAt = (balloons[i].position);
-        addCircle(id, type, dropAt);
-    }
-}
-
 	 

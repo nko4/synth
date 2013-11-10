@@ -120,7 +120,7 @@ var Application = {
 			var box2dgameObj = new window.box2dgame();
 			$('#well').hide();	
 			$('#game').html(out);
-			console.log(err);
+			alert(err);
 			box2dgameObj.init();
 		});
 	}
