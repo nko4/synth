@@ -6,12 +6,13 @@
 	<title>balloon bursters</title>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/animate.css">
 	<link href='http://fonts.googleapis.com/css?family=Nosifer' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
 	<h2 class="page-header">balloon bursters</h2>
-	<div class="well well-lg">
+	<div id="well" class="well well-lg">
 		<div id="register" class="hide jumbotron">
 			<div class="panel panel-primary">
 				<div class="panel-heading">Enter your name to get started!</div>
@@ -22,7 +23,7 @@
 						    <div class="input-group">
 						      <input type="text" class="form-control" name="name" autocorrect="off" value="" placeholder="Name">
 						      <span class="input-group-btn">
-						        <button class="btn btn-primary btn-lg" type="submit" id="registerBtn" type="button">Start</button>
+						        <button class="btn btn-primary" type="submit" id="registerBtn" type="button">Start</button>
 						      </span>
 						    </div>
 						  </div>
@@ -32,12 +33,9 @@
 			</div>
 		</div>
 
-		<div id = 'dashboard' class="jumbotron hide">
-			<div id = 'userInfoWrapper' >
-			</div>
-
-			<div id = 'gamesInfoWrapper' class="	">
-			</div>
+		<div id='dashboard' class="hide">
+			<div id='userInfoWrapper'></div>
+			<div id='gamesInfoWrapper'></div>
 		</div>
 		
 	</div>
