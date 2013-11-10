@@ -83,22 +83,29 @@ var Application = {
 	},
 
 	initJoinGameBtn: function() {
-		var _this = this;
-		$('.joinBtn').on('click', function(evt) {
+		var _this = this,
+			target;
+		$('#gamesList').on('click', function(evt) {
 			evt.preventDefault();
 			evt.stopPropagation();
-			$.ajax({
-				type: "POST",
-				url: "/game/join/" + $(this).attr("data-id")
-			}).
-			done(function(data) {
-				_this.renderGameView(data);
-		  	});
+			target = $(evt.target);
+			if(target.hasClass('joinBtn')) {
+				$.ajax({
+					type: "POST",
+					url: "/game/join/" + target.attr("data-id")
+				}).
+				done(function(data) {
+					_this.renderGameView(data);
+			  	});
+			}
 		});
 	},
 
 	appendNewGame: function(game) {
-		$('#gamesList').append('<a href="" class="list-group-item joinBtn" data-id="' + game.gameId + '">Compete with ' + game.createdByName + '</a>');
+		if($('#gamesList .joinBtn').length === 0) {
+			$('#gamesList').append('<a class="list-group-item active">List of open games - click to start</a>');
+		}
+		$('#gamesList').append('<a class="list-group-item joinBtn" data-id="' + game.gameId + '">Compete with ' + game.createdByName + '</a>');
 	},
 
 	renderGameView: function(data) {
