@@ -62,11 +62,13 @@ var Application = {
 
 	renderDashboard: function(gameData) {
 		var _this = this;
-		dust.render("gamesInfo", gameData, function(err, out) {
+		dust.render("gamesInfo", gameData, function(err, out) {	
 			$('#gamesInfo').remove();
-			$('#gamesInfoWrapper').append(out);
-			$('#dashboard').removeClass('hide');
-			_this.initJoinGameBtn();
+			if(gameData.games.length) {
+				$('#gamesInfoWrapper').append(out);
+				$('#dashboard').removeClass('hide');
+				_this.initJoinGameBtn();
+			}
 		});
 	},
 
