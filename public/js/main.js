@@ -153,6 +153,12 @@ Socket = {
 		});
 
 		socket.on('doBurst', function (balloonId) {
+			gameInstance.deleteBalloon(balloonId);
+			console.log("doBurst balloonId: " + balloonId);
+		});
+
+		socket.on('doMove', function (position) {
+			gameInstance.movePlayer(position);
 			console.log("doBurst balloonId: " + balloonId);
 		});
 
@@ -177,5 +183,9 @@ Socket = {
 
 	didBurst: function(balloon) {
 		socket.emit('didBurst', balloon);
+	},
+
+	didMove: function(position) {
+		socket.emit('didMove', position);
 	}
 };
