@@ -114,7 +114,7 @@ var Application = {
 
 	renderGameView: function(data) {
 		dust.render("game", {}, function(err, out) {
-			$('#well').remove();	
+			$('#well').hide();	
 			$('#container').html(out);
 		});
 	}
