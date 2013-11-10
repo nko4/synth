@@ -1,15 +1,5 @@
-window.box2dgame = function() {
-    
-};
+var Game = function() {
 
-window.box2dgame.prototype.init = function () {
-    /*
-	if (!type) {
-		type = "0";
-	}
-	if (!location) {
-		location = 50;
-	}*/
     // Define the canvas
     var canvaselem = document.getElementById("canvas");
     var context = canvaselem.getContext("2d");
@@ -65,20 +55,23 @@ window.box2dgame.prototype.init = function () {
         world.Step(1 / 60, 10, 10);
         context.clearRect(0, 0, canvaswidth, canvasheight);
         world.ClearForces();
-        //console.log(balloons);
         processObjects();
-        balloons = generateBalloons();
-        for (var i = 0; i < balloons.length; i++) {
+    }
+
+    this.addBalloons = function(balloons) {
+         if (!balloons){
+            balloons = generateBalloons();
+         }
+        for (var i=0;i<balloons.length;i++) {
             var id = (balloons[i].id);
             var type = (balloons[i].type);
             var dropAt = (balloons[i].position);
-            addCircle(id, type, dropAt);
+            addCircle(id,type,dropAt);
         }
-    }
+    };
 
     function addArrow() {
         //create simple triangle
-
         var bodyDef = new b2BodyDef;
         var fixDef = new b2FixtureDef;
         fixDef.density = 1;
@@ -167,17 +160,17 @@ window.box2dgame.prototype.init = function () {
                 var shape = fl.GetShape();
                 var shapeType = shape.GetType();
                 /*
-			var edge = b.GetContactList();
-			while (edge)  {
-				var other = edge.other;
-				
-					var othershape = other.GetFixtureList().GetShape();
-					if (othershape.GetType() == b2Shape.e_circleShape) {
-						world.DestroyBody(other);
-						break;	
-					 }
-				 edge = edge.next;
-			} */
+            var edge = b.GetContactList();
+            while (edge)  {
+                var other = edge.other;
+                
+                    var othershape = other.GetFixtureList().GetShape();
+                    if (othershape.GetType() == b2Shape.e_circleShape) {
+                        world.DestroyBody(other);
+                        break;  
+                     }
+                 edge = edge.next;
+            } */
 
                 if (shapeType == b2Shape.e_polygonShape) {
 
@@ -230,7 +223,10 @@ window.box2dgame.prototype.init = function () {
 
             }
         }
-    }
+    }    
+    
+}; 
 
+Game.prototype.drop = function(balloons) {
+    this.addBalloons(balloons);
 };
-	 
