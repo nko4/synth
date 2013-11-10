@@ -2,6 +2,11 @@
 	display: none;
 }
 
+html, body, #container, #game, #canvas {
+	width: 100%;
+	height: 100%;
+}
+
 .page-header {
 	font-family: 'Nosifer', cursive;
 	font-size:36px;
@@ -19,8 +24,7 @@
 }
 
 body {
-	background: url('bg2.jpg');
-	background-repeat: no-repeat;
+	background: url('wood.png');
 }
 
 .well {
@@ -37,9 +41,4 @@ body {
 	position: absolute;
 	top: 18px;
 	left: 25px;
-}
-
-#canvas {
-	width: 100%;
-	height: 100%;
 }
