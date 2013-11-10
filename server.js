@@ -113,22 +113,21 @@ WebServer = function(store) {
         });
     });    
 
-    server.listen(port, 'localhost');
+    server.listen(port, 'localhost', function() {
+        // if run as root, downgrade to the owner of this file
+        if (process.getuid() === 0) {
+            require('fs').stat(__filename, function(err, stats) {
+                if (err) { return console.error(err); }
+                process.setuid(stats.uid);
+            });
+        }          
+    });
     io = io.listen(server);
     sockets.setup(io, store);
     io.set('log level', 1);
     console.log('Server running at http://0.0.0.0:' + port + '/');
 };
-
-
-// if run as root, downgrade to the owner of this file
-if (process.getuid() === 0) {
-	require('fs').stat(__filename, function(err, stats) {
-		if (err) { return console.error(err); }
-		process.setuid(stats.uid);
-	});
-}    
-
+  
 
 mongoClient.connect('mongodb://localhost:27017/synth', function(err, db) {
 	if(err) throw err;
