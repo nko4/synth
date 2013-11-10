@@ -117,9 +117,11 @@ var Application = {
 
 	renderGameView: function(data) {
 		dust.render("game", {}, function(err, out) {
+			var box2dgameObj = new window.box2dgame();
 			$('#well').hide();	
 			$('#game').html(out);
-			window.box2dgame.init();
+			console.log(err);
+			box2dgameObj.init();
 		});
 	}
 };

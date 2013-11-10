@@ -59,7 +59,7 @@ window.box2dgame.prototype.init = function () {
 
     //balloons = generateBalloons();
 
-    z = window.setInterval(update2, 20); //1000 / 600);
+    z = window.setInterval(box2dgame.update, 20); //1000 / 600);
 
 
     function addArrow() {
