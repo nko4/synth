@@ -133,10 +133,10 @@ $(document).ready(function() {
 	Application.init();
 });
 
-
+var socket;
 Socket = {
 	init: function() {
-		var socket = io.connect();
+		socket = io.connect();
 		socket.on('startGame', function (game) {
 			console.log("startGame");
 			Application.renderGameView();
@@ -147,13 +147,9 @@ Socket = {
 		});
 
 		socket.on('dropBalloons', function (balloons) {
+			console.log(balloons);
 			console.log("dropBalloons");
 			gameInstance.drop(balloons);
-
-			/*simulate baloon burst 
-			var randomBalloon = balloons[Math.floor(Math.random() * balloons.length)];
-			console.log("didBurst balloonId: " + randomBalloon.id);
-			socket.emit('didBurst', randomBalloon);*/
 		});
 
 		socket.on('doBurst', function (balloonId) {
@@ -176,5 +172,9 @@ Socket = {
 		socket.on('newGame', function(game) {
 			Application.getGamesInfo();
 		});
+	},
+
+	didBurst: function(balloon) {
+		socket.emit('didBurst', balloon);
 	}
 };
