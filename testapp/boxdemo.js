@@ -1,10 +1,11 @@
-	function init(type,location) {
+	function init() {
+		/*
 		if (!type) {
-			type = "a";
+			type = "0";
 		}
 		if (!location) {
 			location = 50;
-		}
+		}*/
 		// Define the canvas
 		var canvaselem = document.getElementById("canvas");
 		var context = canvaselem.getContext("2d");
@@ -12,25 +13,32 @@
 		var canvasheight = canvaselem.height-0;
 
 		// Define the world
-		var gravity = new b2Vec2(0, 9);
+		var gravity = new b2Vec2(0, -9);
 		var doSleep = true;
 		var world = new b2World(gravity, doSleep);
 		var deletionBuffer = 4;
          
-		//create ground
-		var fixDef = new b2FixtureDef;
-		fixDef.density = .5;
-		fixDef.friction = 0.4;
-		fixDef.restitution = 0.2;
+		//create player 1
 		var bodyDef = new b2BodyDef;
-		bodyDef.type = b2Body.b2_staticBody;
-		fixDef.shape = new b2PolygonShape;
-		fixDef.shape.SetAsBox(canvaswidth/2,2);
-		bodyDef.position.Set(canvaswidth/2, 0);
-		world.CreateBody(bodyDef).CreateFixture(fixDef);
-		bodyDef.position.Set(canvaswidth/2, canvasheight -2);
-		world.CreateBody(bodyDef).CreateFixture(fixDef);
-         
+		var fixDef = new b2FixtureDef;
+		fixDef.density = 1;
+		fixDef.friction = .2;
+		fixDef.restitution = 0.2;
+        bodyDef.type = b2Body.b2_staticBody;
+	 	fixDef.shape = new b2PolygonShape;
+	  	var scale = 30;
+ 	  	fixDef.shape.SetAsArray([
+		  new b2Vec2(0,0), //(scale*0.966 , scale*0.6),
+		  new b2Vec2(0,40), //(scale*-0.966, scale*0.6),
+		  new b2Vec2(50,20), //(0, scale*-1),
+		  ]);
+ 	  	//bodyDef.bullet =true;    
+ 	  	bodyDef.position.x = 0;//(canvaswidth-scale*2)*Math.random()+scale*2;
+	    	bodyDef.position.y = 25;//Math.floor((Math.random()*400)+1);
+	    	var body=world.CreateBody(bodyDef);
+	         body.CreateFixture(fixDef);
+	        // body.SetLinearVelocity(new b2Vec2(90,-0.7));
+		
 		// Start dropping some shapes
 		//addArrow();
 		//addCircleA();
@@ -44,7 +52,7 @@
 	    // It also lets us skip the clearing of the display since it takes care of it.
 
 	 // The refresh rate of the display. Change the number to make it go faster
-			z = window.setInterval(update2, 1000 / 600);
+			z = window.setInterval(update2, 5);//1000 / 600);
 
 
 	function addArrow() {
@@ -61,18 +69,19 @@
 	  	var scale = 30;
  	  	fixDef.shape.SetAsArray([
 		  new b2Vec2(0,0), //(scale*0.966 , scale*0.6),
-		  new b2Vec2(0,10), //(scale*-0.966, scale*0.6),
-		  new b2Vec2(40,5), //(0, scale*-1),
+		  new b2Vec2(0,8), //(scale*-0.966, scale*0.6),
+		  new b2Vec2(80,4), //(0, scale*-1),
 		  ]);
-            	bodyDef.position.x = 0;//(canvaswidth-scale*2)*Math.random()+scale*2;
+ 	  	//bodyDef.bullet =true;    
+ 	  	bodyDef.position.x = 0;//(canvaswidth-scale*2)*Math.random()+scale*2;
 	    	bodyDef.position.y = Math.floor((Math.random()*400)+1);
 	    	var body=world.CreateBody(bodyDef);
 	         body.CreateFixture(fixDef);
-	         body.SetLinearVelocity(new b2Vec2(110,.7)); 
+	         body.SetLinearVelocity(new b2Vec2(90,-0.7)); 
 		//world.CreateBody(bodyDef).CreateFixture(fixDef);
 	}
 
-	 function addCircleA() {
+	 function addCircle(balloonId) {
 		 // create basic circle
          	 var bodyDef = new b2BodyDef;
 		 var fixDef = new b2FixtureDef;
@@ -84,13 +93,15 @@
 		 bodyDef.type = b2Body.b2_dynamicBody;
 		 scale = 30; //Math.random() * 40;
 		 fixDef.shape = new b2CircleShape(
-			  9 //radius
+			  20 //radius
 		 );
-            	bodyDef.position.x = (canvaswidth-scale*2)*Math.random() + scale*2;
-	    	bodyDef.position.y =.5 ;// canvasheight- (scale*Math.random() +scale*2);
+            	bodyDef.position.x = (canvaswidth-scale*2)*Math.random() + scale*2 + 15;
+	    	bodyDef.position.y = 400 ;// canvasheight- (scale*Math.random() +scale*2);
+	    	
+			bodyDef.userData = balloonId;
 	    	world.CreateBody(bodyDef).CreateFixture(fixDef);
 	 }
-
+	 
 	 // Update the world display and add new objects as appropriate
 	 function update2() {
 		world.Step(1 / 60, 10, 10);
@@ -98,9 +109,9 @@
 	    	world.ClearForces();
 	    
 	    	processObjects();
-	    	var M = Math.floor((Math.random()*10)+1);
+	    	var M = Math.floor((Math.random()*100)+1);
 	    	if (M < 5) {			
-			addCircleA();
+			addCircle(1234);
 			}
 	 }
 
@@ -126,16 +137,31 @@
 				if (!fl) {
 					continue;
 				}
+				
 				var shape = fl.GetShape();
 				var shapeType = shape.GetType();
+				/*
+				var edge = b.GetContactList();
+				while (edge)  {
+					var other = edge.other;
+					
+						var othershape = other.GetFixtureList().GetShape();
+						if (othershape.GetType() == b2Shape.e_circleShape) {
+							world.DestroyBody(other);
+							break;	
+						 }
+					 edge = edge.next;
+				} */
 				
 				if (shapeType == b2Shape.e_polygonShape) {
+					
 					var edge = b.GetContactList();
 					while (edge)  {
 						var other = edge.other;
 						
 							var othershape = other.GetFixtureList().GetShape();
 							if (othershape.GetType() == b2Shape.e_circleShape) {
+								console.log(other.m_userData);
 								world.DestroyBody(other);
 								break;	
 							 }
