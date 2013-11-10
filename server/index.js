@@ -61,9 +61,12 @@ module.exports = function(store) {
         //TODO: handle unauth users
         var gameId = uuid.v1();
         var userId = req.cookies[meta.userId];
-        store.createGame(gameId, userId, function(game) {
-            res.json(200, game);
+        store.getUser(userId, function(user) {
+            store.createGame(gameId, user, function(game) {
+                res.json(200, game);
+            });
         });
+        
     });  
 
     app.post('/game/join/:gameId', function(req, res) {

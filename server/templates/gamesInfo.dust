@@ -2,7 +2,7 @@
 	{?games}
 	  	<a href="" class="list-group-item active">List of open games - click to start</a>
 		{#games}
-			<a href="" class="list-group-item joinBtn" data-id="{gameId}">Game from a user named </a>
+			<a href="" class="list-group-item joinBtn" data-id="{gameId}">Compete with {createdByName}</a>
 		{/games}	
 	{/games}
 	<button id='startGameBtn' class = 'btn btn-primary btn-lg'>Start New Game</button>

@@ -51,10 +51,11 @@ Store.prototype.getGamesBeingPlayed = function(callback) {
 	});
 };
 
-Store.prototype.createGame = function(gameId, userId, callback) {
+Store.prototype.createGame = function(gameId, user, callback) {
 	var game = {
 		gameId: gameId,
-		createdBy: userId
+		createdBy: user.userId,
+		createdByName: user.name
 	};
 	this.gameCollection.insert(game, function(err, game) {
 		if(err) {
