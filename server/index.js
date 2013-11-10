@@ -17,6 +17,8 @@ module.exports = function(store) {
         server = http.createServer(app), 
         io = io.listen(server);
 
+    io.set('log level', 1);
+    
     app.use(function(req, res, next) {
         req.store = store;
         //TODO: handle unauth users
