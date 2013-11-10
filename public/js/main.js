@@ -129,7 +129,7 @@ $(document).ready(function() {
 var socket = io.connect('/');
 socket.on('startGame', function (game) {
 	console.log("startGame");
-	console.log(game);
+	Application.renderGameView();
 });
 
 socket.on('registeredUser', function () {
