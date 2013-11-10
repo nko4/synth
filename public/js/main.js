@@ -117,7 +117,8 @@ var Application = {
 	},
 
 	renderGameView: function(data) {
-		dust.render("game", {}, function(err, out) {
+		dust.render("game", gameData, function(err, out) {
+			console.log(gameData);
 			$('#well').hide();	
 			$('#game').html(out);
 			$('#game').show();
