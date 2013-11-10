@@ -1,4 +1,4 @@
 <div id = "userInfo">
 	<p>Registered user: <b>{name}</b></p>
-	<button id='startGameBtn'>Start Game</button>
+	<button id='startGameBtn' class = 'btn btn-primary btn-lg'>Start New Game</button>
 </div>

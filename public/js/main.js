@@ -7,7 +7,6 @@ var Application = {
 		$(document).ready(function() {
 
 			_this.getUserInfo();
-			_this.getGamesInfo();
 
 			$('#registerForm').on('submit', function(evt) {
 				evt.preventDefault();
@@ -34,6 +33,7 @@ var Application = {
 		.done(function( data ) {
 			userData = data;
 			_this.renderUserInfo(userData);
+			_this.getGamesInfo();
 	  	})
 	  	.fail(function( data) {
 	    	$('#register').removeClass('hide');

@@ -3,37 +3,38 @@
 
 <head>
 	<title>Baloon Arrow GAME!!!</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<h2>Welcome Guys!</h2>
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<!-- Optional theme -->
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/bootstrap-theme.css">
 </head>
 
 <body>
-	<div id = "register" class="hide">
+	<div id = "register" class="hide jumbotron">
 		<p>User not found</p>
 		<form id="registerForm">
 			<input name="name" placeholder="Enter your Name" autocorrect="off" value="" />
-			<button type="submit" id="registerBtn" class="">Register</button>		
+			<button type="submit" id="registerBtn" class="btn btn-primary btn-lg">Register</button>		
 		</form>
 	</div>
-	<div id = 'dashboard' class="hide">
-		<div id = 'userInfoWrapper' class="">
+	<div id = 'dashboard' class="jumbotron hide">
+		<div id = 'userInfoWrapper' >
 		</div>
 
-		<div id = 'gamesInfoWrapper' class="">
+		<div id = 'gamesInfoWrapper' class="	">
 		</div>
 	</div>
 
 	<script src="js/lib/socket.io.js"></script>
 	<script src="js/lib/jquery.min.js"></script>
 	<script src="js/lib/dust-core-2.2.0.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/lib/bootstrap.js"></script>
+
 	<script src="views/userInfo.js"></script>
 	<script src="views/gamesInfo.js"></script>
-	<script src="js/main.js"></script>
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
