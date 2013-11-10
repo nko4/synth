@@ -132,8 +132,8 @@ socket.on('doBurst', function (balloonId) {
 	console.log("doBurst balloonId: " + balloonId);
 });
 
-socket.on('stopGame', function (game) {
-	alert("Winner of thie Game is: "+game.winner)
+socket.on('stopGame', function (gameResult) {
+	alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "		" +gameResult.nameB+" Scored:" +gameResult.scoreB + "And the Winner is: "+gameResult.winner);
 	console.log("stopGame");
 });
 
