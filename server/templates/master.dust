@@ -13,8 +13,8 @@
 <body>
 	<h2 class="page-header">balloon bursters</h2>
 	<div id="well" class="well well-lg">
-		<div id="register" class="hide jumbotron">
-			<div class="panel panel-primary">
+		<div id="register" class="hide">
+			<div class="panel panel-info">
 				<div class="panel-heading">Enter your name to get started!</div>
 				<div class="panel-body">
 					<form id="registerForm">
