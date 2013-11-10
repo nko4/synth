@@ -35,7 +35,43 @@ Play.prototype.startGame = function() {
 };
 
 Play.prototype.run = function() {
+	var self = this;
+		counter = 0,
+		max = 10;
 
+	var intervalID = setInterval(function() {
+		if(counter < max) {
+			counter+=1;
+			var balloons = self.generateBalloons();
+			self.io.sockets.socket(self.playerA.socketId).emit("dropBalloons", balloons);
+			self.io.sockets.socket(self.playerB.socketId).emit("dropBalloons", balloons);			
+		}
+		else {
+			clearInterval(intervalID);
+			self.stop();
+		}
+	}, 2000);
 };
+
+Play.prototype.stop = function() {
+	this.io.sockets.socket(this.playerA.socketId).emit("stopGame", this.game);
+	this.io.sockets.socket(this.playerB.socketId).emit("stopGame", this.game);
+};
+
+Play.prototype.generateBalloons = function() {
+	var count = 1 + Math.floor(Math.random()*20),
+		balloons = [];
+
+	for(var i = 0; i < count; i+=1) {
+		balloons.push({
+			id: 1 + Math.floor(Math.random()*10000000000000),
+			type: Math.floor(Math.random()*2), //0 = playerA; 1 = playerB
+			position: Math.floor(Math.random()*100) + 1
+		});	
+	}
+
+	return balloons;
+};
+
 
 module.exports = Play;

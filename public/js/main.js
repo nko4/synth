@@ -57,3 +57,12 @@ socket.on('startGame', function (game) {
 socket.on('registeredUser', function () {
 	console.log("registeredUser");
 });
+
+socket.on('dropBalloons', function (balloons) {
+	console.log("dropBalloons");
+	console.log(balloons);
+});
+
+socket.on('stopGame', function () {
+	console.log("stopGame");
+});
