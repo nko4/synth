@@ -1,0 +1,29 @@
+<div>
+	{?games}
+	<div class="list-group" style="width: 80%;margin-left: 10%;">
+		<div id="gamesList">
+		  	<a class="list-group-item active" style="font-size:18px;">Open games - Select your opponent</a>
+			{#games}
+				<a class="list-group-item joinBtn" style="font-size:16px;" data-id="{gameId}">
+					<img src="css/Play.png" style="width: 50px;"/> Play with <strong>{createdByName}</strong></a>
+			{/games}	
+		</div>	
+	</div>
+	<div class="progress" style="margin-top: 21px;">
+		<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+	</div>	
+	{:else}
+	<p class="text-center text-danger">No open games!!</p>
+	<div class="progress" style="margin-top: 21px;">
+		<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+	</div>	
+	{/games}
+	
+		
+	{^userCreatedGame}
+		<button id='startGameBtn' type="button" class="btn btn-primary btn-block">Create a New game</button>
+	{/userCreatedGame}
+	{?userCreatedGame}
+		<p class="text-info text-center " style="font-size:18px;">You have created one game, wait for someone to join!<p>
+	{/userCreatedGame}	
+</div>
