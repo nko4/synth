@@ -87,8 +87,15 @@ Play.prototype.run = function() {
 };
 
 Play.prototype.stop = function() {
-	this.io.sockets.socket(this.playerA.socketId).emit("stopGame", this.game);
-	this.io.sockets.socket(this.playerB.socketId).emit("stopGame", this.game);
+	var gameResult = {
+		winner: this.game.winner,
+		nameA: this.playerA.name,
+		scoreA: this.playerA.score,
+		nameB: this.playerB.name,
+		scoreB: this.playerB.score
+	};
+	this.io.sockets.socket(this.playerA.socketId).emit("stopGame", gameResult);
+	this.io.sockets.socket(this.playerB.socketId).emit("stopGame", gameResult);
 };
 
 Play.prototype.generateBalloons = function() {
