@@ -149,10 +149,10 @@ Socket = {
 			console.log("dropBalloons");
 			gameInstance.drop(balloons);
 
-			//simulate baloon burst 
+			/*simulate baloon burst 
 			var randomBalloon = balloons[Math.floor(Math.random() * balloons.length)];
 			console.log("didBurst balloonId: " + randomBalloon.id);
-			socket.emit('didBurst', randomBalloon);
+			socket.emit('didBurst', randomBalloon);*/
 		});
 
 		socket.on('doBurst', function (balloonId) {
@@ -160,7 +160,11 @@ Socket = {
 		});
 
 		socket.on('stopGame', function (gameResult) {
-			alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "\n" +gameResult.nameB+" Scored:" +gameResult.scoreB + "\nAnd the Winner is: "+gameResult.winner);
+			if (gameResult.isTie){
+				alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "\n" +gameResult.nameB+" Scored:" +gameResult.scoreB + "\nAnd its a TIE!!");
+			} else {
+				alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "\n" +gameResult.nameB+" Scored:" +gameResult.scoreB + "\nAnd the Winner is: "+gameResult.winner);
+			}
 			console.log("stopGame");
 		});
 

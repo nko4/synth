@@ -80,19 +80,30 @@ Play.prototype.run = function() {
 		}
 		else {
 			clearInterval(intervalID);
-			self.game.winner = self.playerA.score > self.playerB.score ? self.playerA.name : self.playerB.name;
 			self.stop();
 		}
 	}, 2000);
 };
 
 Play.prototype.stop = function() {
+	var isTie = false, 
+		winner = '', 
+		scoreA = this.playerA.score, 
+		scoreB = this.playerB.score;
+	
+	if (scoreA === scoreB){
+		isTie = true;
+	} else {
+		winner =  scoreA > scoreB ? this.playerA.name : this.playerB.name;
+	}
+
 	var gameResult = {
-		winner: this.game.winner,
+		winner: winner,
 		nameA: this.playerA.name,
-		scoreA: this.playerA.score,
+		scoreA: scoreA,
 		nameB: this.playerB.name,
-		scoreB: this.playerB.score
+		scoreB: scoreB,
+		isTie: isTie
 	};
 	this.io.sockets.socket(this.playerA.socketId).emit("stopGame", gameResult);
 	this.io.sockets.socket(this.playerB.socketId).emit("stopGame", gameResult);
