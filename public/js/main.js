@@ -161,10 +161,12 @@ Socket = {
 
 		socket.on('stopGame', function (gameResult) {
 			if (gameResult.isTie){
-				alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "\n" +gameResult.nameB+" Scored:" +gameResult.scoreB + "\nAnd its a TIE!!");
+				alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "\n" +gameResult.nameB+" Scored:" +gameResult.scoreB + "\n\n\nAnd its a TIE!!");
 			} else {
-				alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "\n" +gameResult.nameB+" Scored:" +gameResult.scoreB + "\nAnd the Winner is: "+gameResult.winner);
+				alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "\n" +gameResult.nameB+" Scored:" +gameResult.scoreB + "\n\n\nAnd the Winner is: "+gameResult.winner);
 			}
+			$('body').removeClass('clouds').addClass('bg');
+			$('#well').show();		
 			console.log("stopGame");
 		});
 
