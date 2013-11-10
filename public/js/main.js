@@ -95,8 +95,11 @@ var Application = {
 		  		alert('Game Joined');
 		  	});
 		});
-	}
+	},
 
+	appendNewGame: function(game) {
+		$('#gamesList').append('<a href="" class="list-group-item joinBtn" data-id="' + game.gameId + '">Compete with ' + game.createdByName + '</a>');
+	}
 };
 
 $(document).ready(function() {
@@ -131,4 +134,8 @@ socket.on('doBurst', function (balloonId) {
 
 socket.on('stopGame', function () {
 	console.log("stopGame");
+});
+
+socket.on('newGame', function(game) {
+	Application.appendNewGame(game);
 });

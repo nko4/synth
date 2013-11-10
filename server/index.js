@@ -61,11 +61,11 @@ module.exports = function(store) {
     });    
 
     app.post('/game/start', function(req, res) {
-        //TODO: handle unauth users
         var gameId = uuid.v1();
         var userId = req.cookies[meta.userId];
         store.getUser(userId, function(user) {
             store.createGame(gameId, user, function(game) {
+                sockets.broadCastNewGame(io, game);
                 res.json(200, game);
             });
         });
@@ -101,5 +101,4 @@ module.exports = function(store) {
     server.listen(port);
 
     console.log('Server running at http://0.0.0.0:' + port + '/');
-
 };

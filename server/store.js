@@ -68,11 +68,11 @@ Store.prototype.createGame = function(gameId, user, callback) {
 		createdBy: user.userId,
 		createdByName: user.name
 	};
-	this.gameCollection.insert(game, function(err, game) {
+	this.gameCollection.insert(game, function(err, results) {
 		if(err) {
 			throw err;
 		}
-		callback(game);
+		callback(results[0]);
 	});
 };
 
