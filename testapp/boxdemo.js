@@ -52,7 +52,10 @@
 	    // It also lets us skip the clearing of the display since it takes care of it.
 
 	 // The refresh rate of the display. Change the number to make it go faster
-			z = window.setInterval(update2, 5);//1000 / 600);
+		
+		//balloons = generateBalloons();
+    	
+			z = window.setInterval(update2, 20);//1000 / 600);
 
 
 	function addArrow() {
@@ -93,7 +96,7 @@
 		 bodyDef.type = b2Body.b2_dynamicBody;
 		 scale = 30; //Math.random() * 40;
 		 fixDef.shape = new b2CircleShape(
-			  20 //radius
+			  40 //radius
 		 );
             	bodyDef.position.x = (canvaswidth*(dropAt/100));
 	    	bodyDef.position.y = canvasheight ;// canvasheight- (scale*Math.random() +scale*2);
@@ -109,14 +112,34 @@
 		world.Step(1 / 60, 10, 10);
 		context.clearRect(0,0,canvaswidth,canvasheight);
 	    	world.ClearForces();
-	    
+	    	//console.log(balloons);
 	    	processObjects();
-	    	var M = Math.floor((Math.random()*100)+1);
-	    	if (M < 2) {			
-			addCircle(1234,1,70);
-			}
+	    	balloons = generateBalloons();
+	    	for (var i=0;i<balloons.length;i++)
+	    	{
+	    		var id = (balloons[i].id);
+	    		var type = (balloons[i].type);
+	    		var dropAt = (balloons[i].position);
+				addCircle(id,type,dropAt);
+	    	}
+	    			
 	 }
+	 
+	 function generateBalloons(){
+			var count = 1 + Math.floor(Math.random()*2),
+				balloons = [];
 
+			for(var i = 0; i < count; i+=1) {
+				balloons.push({
+					id: 1 + Math.floor(Math.random()*10000000000000),
+					type: Math.floor(Math.random()*2), //0 = playerA; 1 = playerB
+					position: Math.floor(Math.random()*100) + 1
+				});	
+			}
+
+			return balloons;
+		}
+	 
 	 // Draw the updated display
 	 // Also handle deletion of objects
 	 function processObjects() {
