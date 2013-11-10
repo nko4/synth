@@ -1,0 +1,237 @@
+	function init() {
+		
+		// Define the canvas
+		var canvaselem = document.getElementById("canvas");
+		var context = canvaselem.getContext("2d");
+		var canvaswidth = canvaselem.width-0;
+		var canvasheight = canvaselem.height-0;
+
+		// Define the world
+		var gravity = new b2Vec2(0, -90);
+		var doSleep = true;
+		var world = new b2World(gravity, doSleep);
+		var deletionBuffer = 4;
+         
+		//create player 1
+		createPlayer(5);
+		
+		// Start dropping some shapes
+		//addArrow();
+		//addCircleA();
+		//addCircleB();
+		canvaselem.onclick = function(){ 
+			addArrow();
+		};
+		
+		document.onkeydown = function checkKey(e) {
+		    var event = window.event ? window.event : e;
+		    if (true) {
+		        //alert(event.keyCode)
+		        if (event.keyCode == "38"){
+		        	posY = 200;
+		        }else if(event.keyCode == "40"){
+		        	posY = 10;
+		        }
+		    }
+		    delPlayer1();
+		    createPlayer(posY);
+		};
+		
+		function createPlayer(posY){
+		var bodyDef = new b2BodyDef;
+		var fixDef = new b2FixtureDef;
+		fixDef.density = 0;
+		fixDef.friction = 0;
+		fixDef.restitution = 0;
+        bodyDef.type = b2Body.b2_staticBody;
+	 	fixDef.shape = new b2PolygonShape;
+	  	var scale = 30;
+ 	  	fixDef.shape.SetAsArray([
+		  new b2Vec2(0,0), 
+		  new b2Vec2(0,40),
+		  new b2Vec2(50,20),
+		  ]);
+   
+ 	  	bodyDef.position.x = 0;
+	    	bodyDef.position.y = posY;
+	    	var data = "1";
+			bodyDef.userData = data;
+			//body.SetGravityScale(0);
+	    	var body=world.CreateBody(bodyDef);
+	         body.CreateFixture(fixDef);    
+		}
+			z = window.setInterval(update2, 30);//1000 / 600);
+
+	function addArrow() {
+    		//create simple triangle
+		
+         	var bodyDef = new b2BodyDef;
+		var fixDef = new b2FixtureDef;
+		fixDef.density = 1;
+		fixDef.friction = .2;
+		fixDef.restitution = 0.2;
+
+         	bodyDef.type = b2Body.b2_dynamicBody;
+	 	fixDef.shape = new b2PolygonShape;
+	  	var scale = 30;
+ 	  	fixDef.shape.SetAsArray([
+		  new b2Vec2(0,0), //(scale*0.966 , scale*0.6),
+		  new b2Vec2(0,8), //(scale*-0.966, scale*0.6),
+		  new b2Vec2(80,4), //(0, scale*-1),
+		  ]);
+ 	  	//bodyDef.bullet =true;    
+ 	  	bodyDef.position.x = 0;//(canvaswidth-scale*2)*Math.random()+scale*2;
+	    	bodyDef.position.y = Math.floor((Math.random()*400)+1);
+	    	var body=world.CreateBody(bodyDef);
+	         body.CreateFixture(fixDef);
+	         body.SetLinearVelocity(new b2Vec2(190,-0.7)); 
+		//world.CreateBody(bodyDef).CreateFixture(fixDef);
+	}
+
+	
+	 
+	 // Update the world display and add new objects as appropriate
+	 function update2() {
+		world.Step(1 / 60, 10, 10);
+		context.clearRect(0,0,canvaswidth,canvasheight);
+	    	world.ClearForces();
+	    	//console.log(balloons);
+	    	processObjects();
+		
+	 }
+	 
+	 
+	 // Draw the updated display
+	 // Also handle deletion of objects
+	 function delPlayer1(){
+		 var node = world.GetBodyList();
+		 while (node) {
+			var b = node;
+			node = node.GetNext();
+			var position = b.GetPosition();
+			if (b.GetType() == b2Body.b2_staticBody) {
+				var flipy = position.y;//canvasheight - position.y;
+				var fl = b.GetFixtureList();
+				if (!fl) {
+					continue;
+				}
+				var shape = fl.GetShape();
+				var shapeType = shape.GetType();
+				if (shapeType == b2Shape.e_polygonShape) {
+					
+					if(b.m_userData == '1'){
+						world.DestroyBody(b);
+				}
+			}
+			}
+	 }
+	 }
+		 
+	 function processObjects() {
+		 var node = world.GetBodyList();
+		 while (node) {
+			var b = node;
+			node = node.GetNext();
+			// Destroy objects that have floated off the screen
+			var position = b.GetPosition();
+			if (position.x < -deletionBuffer || position.x >(canvaswidth+4)) {
+				world.DestroyBody(b);
+				continue;
+		 	}
+			if (b.GetType() == b2Body.b2_staticBody) {
+				
+				var flipy = position.y;//canvasheight - position.y;
+				var fl = b.GetFixtureList();
+				if (!fl) {
+					continue;
+				}
+				
+				var shape = fl.GetShape();
+				var shapeType = shape.GetType();
+				if (shapeType == b2Shape.e_polygonShape) {
+					var vert = shape.GetVertices();
+					
+					context.beginPath();
+
+					// Handle the possible rotation of the polygon and draw it
+					b2Math.MulMV(b.m_xf.R,vert[0]);
+					var tV = b2Math.AddVV(position, b2Math.MulMV(b.m_xf.R, vert[0]));
+					context.moveTo(tV.x, canvasheight-tV.y);
+					for (var i = 0; i < vert.length; i++) {
+						var v = b2Math.AddVV(position, b2Math.MulMV(b.m_xf.R, vert[i]));
+						context.lineTo(v.x, canvasheight - v.y);
+					}
+					context.lineTo(tV.x, canvasheight - tV.y);
+					context.closePath();
+					context.strokeStyle = "#CCCCCC";
+					context.fillStyle = "#88FFAA";
+					context.stroke();
+					context.fill();
+				}
+			}
+
+			// Draw the dynamic objects
+			if (b.GetType() == b2Body.b2_dynamicBody) {
+
+				var flipy = position.y;//canvasheight - position.y;
+				var fl = b.GetFixtureList();
+				if (!fl) {
+					continue;
+				}
+				
+				var shape = fl.GetShape();
+				var shapeType = shape.GetType();
+				/*
+				var edge = b.GetContactList();
+				while (edge)  {
+					var other = edge.other;
+					
+						var othershape = other.GetFixtureList().GetShape();
+						if (othershape.GetType() == b2Shape.e_circleShape) {
+							world.DestroyBody(other);
+							break;	
+						 }
+					 edge = edge.next;
+				} */
+				
+				if (shapeType == b2Shape.e_polygonShape) {
+					
+					var edge = b.GetContactList();
+					while (edge)  {
+						var other = edge.other;
+						
+							var othershape = other.GetFixtureList().GetShape();
+							if (othershape.GetType() == b2Shape.e_circleShape) {
+								console.log(other.m_userData.id);// send to Sam
+								world.DestroyBody(other);
+								break;	
+							 }
+						 edge = edge.next;
+					}
+					var vert = shape.GetVertices();
+					
+					context.beginPath();
+
+					// Handle the possible rotation of the polygon and draw it
+					b2Math.MulMV(b.m_xf.R,vert[0]);
+					var tV = b2Math.AddVV(position, b2Math.MulMV(b.m_xf.R, vert[0]));
+					context.moveTo(tV.x, canvasheight-tV.y);
+					for (var i = 0; i < vert.length; i++) {
+						var v = b2Math.AddVV(position, b2Math.MulMV(b.m_xf.R, vert[i]));
+						context.lineTo(v.x, canvasheight - v.y);
+					}
+					context.lineTo(tV.x, canvasheight - tV.y);
+					context.closePath();
+					context.strokeStyle = "#CCCCCC";
+					context.fillStyle = "#88FFAA";
+					context.stroke();
+					context.fill();
+
+				}
+
+			 }
+		 }
+	 }
+ 
+};
+
