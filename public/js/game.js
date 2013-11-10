@@ -106,9 +106,7 @@ var Game = function() {
         var bodyDef = new b2BodyDef;
         bodyDef.type = b2Body.b2_dynamicBody;
         scale = 30; //Math.random() * 40;
-        fixDef.shape = new b2CircleShape(
-        40 //radius
-        );
+        fixDef.shape = new b2CircleShape(8);//radius
         bodyDef.position.x = (canvaswidth * (dropAt / 100));
         bodyDef.position.y = canvasheight; // canvasheight- (scale*Math.random() +scale*2);
         var data = {
@@ -180,7 +178,7 @@ var Game = function() {
 
                         var othershape = other.GetFixtureList().GetShape();
                         if (othershape.GetType() == b2Shape.e_circleShape) {
-                            console.log(other.m_userData.id); // send to Sam
+                            console.log(other.m_userData.id, other.m_userData.type); // send to Sam
                             world.DestroyBody(other);
                             break;
                         }
