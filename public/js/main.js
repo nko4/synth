@@ -4,23 +4,20 @@ var Application = {
 		var userData,
 			gameData,
 		    _this = this;
-		$(document).ready(function() {
+		
+		_this.getUserInfo();
 
-			_this.getUserInfo();
-
-			$('#registerForm').on('submit', function(evt) {
-				evt.preventDefault();
-				$.ajax({
-					type: "POST",
-					url: "/user",
-					data: $('#registerForm').serialize()
-					})
-					.done(function( data ) {
-				  		$('#register').addClass('hide');
-				  		_this.getUserInfo();
-				  	});
-				});
-
+		$('#registerForm').on('submit', function(evt) {
+			evt.preventDefault();
+			$.ajax({
+				type: "POST",
+				url: "/user",
+				data: $('#registerForm').serialize()
+			}).
+			done(function(data) {
+				$('#register').addClass('hide');
+				_this.getUserInfo();
+			});
 		});
 	},
 
@@ -29,27 +26,16 @@ var Application = {
 		$.ajax({
 			type: "GET",
 			url: "/user",
-		})
-		.done(function( data ) {
+		}).
+		done(function(data) {
 			userData = data;
 			_this.renderUserInfo(userData);
 			_this.getGamesInfo();
-	  	})
-	  	.fail(function( data) {
+	  	}).
+	  	fail(function(data) {
 	    	$('#register').removeClass('hide');
+	    	$('#well').addClass('animated bounceInDown');
 	 	});
-	},
-
-	getGamesInfo: function() {
-		var _this = this;
-		$.ajax({
-			type: "GET",
-			url: "/games/ready",
-		})
-		.done(function( data ) {
-			gameData = data;
-			_this.renderDashboard(gameData);
-	  	});
 	},
 
 	renderUserInfo: function(userData) {
@@ -57,9 +43,21 @@ var Application = {
 		dust.render("userInfo", userData, function(err, out) {
 			$('#userInfo').remove();
 			$('#userInfoWrapper').append(out);
-			$('#dashboard').removeClass('hide');
+			$('#dashboard').removeClass('hide').addClass('animated flipInY');
 			_this.initStartGameBtn();
 		});
+	},	
+
+	getGamesInfo: function() {
+		var _this = this;
+		$.ajax({
+			type: "GET",
+			url: "/games/ready",
+		}).
+		done(function(data) {
+			gameData = data;
+			_this.renderDashboard(gameData);
+	  	});
 	},
 
 	renderDashboard: function(gameData) {
@@ -102,7 +100,11 @@ var Application = {
 
 };
 
-Application.init();
+$(document).ready(function() {
+	Application.init();
+});
+
+
 
 var socket = io.connect('/');
 socket.on('startGame', function (game) {
