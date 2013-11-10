@@ -169,7 +169,7 @@ Socket = {
 		});
 
 		socket.on('newGame', function(game) {
-			Application.appendNewGame(game);
+			Application.getGamesInfo();
 		});
 	}
 };
