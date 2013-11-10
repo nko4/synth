@@ -113,7 +113,7 @@ WebServer = function(store) {
         });
     });    
 
-    server.listen(port);
+    server.listen(port, 'localhost');
     io = io.listen(server);
     sockets.setup(io, store);
     io.set('log level', 1);
