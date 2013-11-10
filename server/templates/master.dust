@@ -12,36 +12,37 @@
 
 <body>
 	<h2 class="page-header">balloon bursters</h2>
-	<div id="well" class="well well-lg">
-		<div id="register" class="hide">
-			<div class="panel panel-info">
-				<div class="panel-heading">Enter your name to get started!</div>
-				<div class="panel-body">
-					<form id="registerForm">
-						<div class="row">
-						  <div class="col-lg-6">
-						    <div class="input-group">
-						      <input type="text" class="form-control" name="name" autocorrect="off" value="" placeholder="Name">
-						      <span class="input-group-btn">
-						        <button class="btn btn-primary" type="submit" id="registerBtn" type="button">Start</button>
-						      </span>
-						    </div>
-						  </div>
-						</div>						
-					</form>
+	<div id="container">
+		<div id="well" class="well well-lg">
+			<div id="register" class="hide">
+				<div class="panel panel-info">
+					<div class="panel-heading">Enter your name to get started!</div>
+					<div class="panel-body">
+						<form id="registerForm">
+							<div class="row">
+							  <div class="col-lg-6">
+							    <div class="input-group">
+							      <input type="text" class="form-control" name="name" autocorrect="off" value="" placeholder="Name">
+							      <span class="input-group-btn">
+							        <button class="btn btn-primary" type="submit" id="registerBtn" type="button">Start</button>
+							      </span>
+							    </div>
+							  </div>
+							</div>						
+						</form>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div id='dashboard' class="hide">
-			<div class="panel panel-success">
-				<div id='userInfoWrapper' class="panel-heading"></div>
-				<div class="panel-body">
-					<div id='gamesInfoWrapper'></div>
+			<div id='dashboard' class="hide">
+				<div class="panel panel-success">
+					<div id='userInfoWrapper' class="panel-heading"></div>
+					<div class="panel-body">
+						<div id='gamesInfoWrapper'></div>
+					</div>
 				</div>
-			</div>
+			</div>	
 		</div>
-
 	</div>
 
 	<script src="js/lib/socket.io.js"></script>
@@ -52,6 +53,7 @@
 
 	<script src="views/userInfo.js"></script>
 	<script src="views/gamesInfo.js"></script>
+	<script src="views/game.js"></script>
 </body>
 
 </html>

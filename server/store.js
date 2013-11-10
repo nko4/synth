@@ -24,10 +24,18 @@ Store.prototype.getUser = function(userId, callback) {
 };
 
 Store.prototype.deleteUser = function(userId, callback) {
-	this.userCollection.remove({userId: userId}, function(err, results) {
-		if(err) throw err;
-		callback(results);
-	});
+	var self = this;
+    self.gameCollection.remove({
+    				createdBy: {
+    					$in: [userId]
+    				}
+    			}, function(err) {
+    				if(err) throw err;
+					self.userCollection.remove({userId: userId}, function(err, results) {
+						if(err) throw err;
+						callback(results);
+					});	
+	});	
 };
 
 Store.prototype.getGameCreatedByUser = function(userId, callback) {
