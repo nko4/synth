@@ -74,13 +74,16 @@ module.exports = function(store) {
 
     app.post('/game/join/:gameId', function(req, res) {
         var userId = req.cookies[meta.userId];
-        store.joinGame(req.params.gameId, userId, function(game) {
-            var play = new Play(game, store, io);
-            play.start();
-            res.json(200, {
-                gameId: req.params.gameId
+        store.getUser(userId, function(user) {
+            store.joinGame(req.params.gameId, user, function(game) {
+                var play = new Play(game, store, io);
+                play.start();
+                res.json(200, {
+                    gameId: req.params.gameId
+                });
             });
         });
+        
     });    
 
     app.get('/clear', function(req, res) {

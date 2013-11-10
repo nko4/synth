@@ -66,7 +66,8 @@ Store.prototype.createGame = function(gameId, user, callback) {
 	var game = {
 		gameId: gameId,
 		createdBy: user.userId,
-		createdByName: user.name
+		createdByName: user.name,
+		joinedByName: ''
 	};
 	this.gameCollection.insert(game, function(err, results) {
 		if(err) {
@@ -76,9 +77,9 @@ Store.prototype.createGame = function(gameId, user, callback) {
 	});
 };
 
-Store.prototype.joinGame = function(gameId, userId, callback) {
+Store.prototype.joinGame = function(gameId, user, callback) {
 	var self = this;
-	self.gameCollection.update({gameId: gameId}, {$set: {joinedBy: userId }}, function(err) {
+	self.gameCollection.update({gameId: gameId}, {$set: {joinedBy: user.userId, joinedByName: user.name}}, function(err) {
 		if(err) {
 			throw err;
 		}
