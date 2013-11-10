@@ -1,5 +1,1 @@
-<div id = "userInfo">
-	<p>Registered user: <b>{name}</b></p>
-
-	<button id='startGameBtn' class = 'btn btn-primary'>Start New Game</button>
-</div>
+Registered as <b>{name}</b>

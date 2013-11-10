@@ -78,8 +78,8 @@ var Application = {
 			$.ajax({
 				type: "POST",
 				url: "/game/start"
-			})
-			.done(function( data ) {
+			}).
+			done(function(data) {
 				_this.getGamesInfo();
 		  		alert('Game Started.. waiting for other player...');
 		  	});
@@ -91,9 +91,9 @@ var Application = {
 		$('.joinBtn').on('click', function(evt) {
 			$.ajax({
 				type: "POST",
-				url: "/game/join/"+$(this).attr("data-id")
-			})
-			.done(function( data ) {
+				url: "/game/join/" + $(this).attr("data-id")
+			}).
+			done(function( data ) {
 				_this.getGamesInfo();
 		  		alert('Game Joined');
 		  	});
