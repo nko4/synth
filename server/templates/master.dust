@@ -12,6 +12,7 @@
 
 <body>
 	<h2 class="page-header">balloon bursters</h2>
+	<iframe class="vote" src="http://nodeknockout.com/iframe/synth" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
 	<div id="container">
 		<div id="well" class="well well-lg">
 			<div id="register" class="hide">

@@ -31,3 +31,9 @@ body {
 #gamesList .joinBtn {
 	cursor: pointer;
 }
+
+.vote {
+	position: absolute;
+	top: 18px;
+	left: 25px;
+}
