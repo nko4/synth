@@ -94,8 +94,12 @@ var Application = {
 					type: "POST",
 					url: "/game/join/" + target.attr("data-id")
 				}).
-				done(function(data) {
-					_this.renderGameView(data);
+				fail(function() {
+					target.remove();
+					if($('#gamesList .joinBtn').length === 0) {
+						$('#gamesList').html("");
+					}					
+					alert("oops game not found! try another game or start a new one!");
 			  	});
 			}
 		});

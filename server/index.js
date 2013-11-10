@@ -76,11 +76,18 @@ module.exports = function(store) {
         var userId = req.cookies[meta.userId];
         store.getUser(userId, function(user) {
             store.joinGame(req.params.gameId, user, function(game) {
-                var play = new Play(game, store, io);
-                play.start();
-                res.json(200, {
-                    gameId: req.params.gameId
-                });
+                if(game) {
+                    var play = new Play(game, store, io);
+                    play.start();
+                    res.json(200, {
+                        gameId: req.params.gameId
+                    });
+                }
+                else {
+                    res.json(404, {
+                        error: "game not found"
+                    });                    
+                }
             });
         });
         
