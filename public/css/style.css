@@ -19,7 +19,8 @@
 }
 
 body {
-	background: url('wood.png');
+	background: url('bg2.jpg');
+	background-repeat: no-repeat;
 }
 
 .well {
