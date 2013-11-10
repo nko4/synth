@@ -108,9 +108,7 @@ module.exports = function(store) {
         });
     });    
 
-
-    sockets.setup(io, store);
     server.listen(port);
-
+    sockets.setup(io, store);
     console.log('Server running at http://0.0.0.0:' + port + '/');
 };
