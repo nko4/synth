@@ -9,19 +9,32 @@
 </head>
 
 <body>
-	<div id="register" class="hide">
-		<p>Please enter your name to get started!</p>
-		<form id="registerForm">
-			<input name="name" placeholder="name" autocorrect="off" value="" />
-			<button type="submit" id="registerBtn" class="">Start</button>		
-		</form>
-	</div>
-
-	<div id='dashboard' class="hide">
-		<div id='userInfoWrapper' class="">
+	<div class="well well-lg">
+		<div id="register" class="hide">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Please enter your name to get started!</div>
+				<div class="panel-body">
+					<form id="registerForm">
+						<div class="row">
+						  <div class="col-lg-6">
+						    <div class="input-group">
+						      <input type="text" class="form-control" name="name" autocorrect="off" value="" placeholder="name">
+						      <span class="input-group-btn">
+						        <button class="btn btn-default" type="submit" id="registerBtn" type="button">Start</button>
+						      </span>
+						    </div>
+						  </div>
+						</div>						
+					</form>
+				</div>
+			</div>
 		</div>
 
-		<div id='gamesInfoWrapper' class="">
+		<div id='dashboard' class="hide">
+			<div id='userInfoWrapper' class="">
+			</div>
+			<div id='gamesInfoWrapper' class="">
+			</div>
 		</div>
 	</div>
 
