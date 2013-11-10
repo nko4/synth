@@ -1,5 +1,5 @@
  <div class="alert alert-warning" >
- 	<p class="text-info">Game Controls:</p>
- 	<p class="text-info">Shoot Arrows - 'space' key, Move Player - 'up/down' arrow key</p>
+ 	<p class="text-primary">Game Controls:</p>
+ 	<p class="text-primary">Shoot Arrows - 'space' key, Move Player - 'up/down' arrow key</p>
  </div>
  <canvas id="canvas"></canvas>	

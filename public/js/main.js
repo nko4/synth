@@ -162,10 +162,11 @@ Socket = {
 			} else {
 				alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "\n" +gameResult.nameB+" Scored:" +gameResult.scoreB + "\n\n\nAnd the Winner is: "+gameResult.winner);
 			}
-			$('body').removeClass('clouds').addClass('bg');
+		/*	$('body').removeClass('clouds').addClass('bg');
 			Application.getGamesInfo();
 			$('#well').show();	
-			$('#game').hide();		
+			$('#game').hide();		*/
+			window.location.href = "/clear";
 			console.log("stopGame");
 		});
 
