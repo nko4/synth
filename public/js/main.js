@@ -117,6 +117,15 @@ socket.on('registeredUser', function () {
 socket.on('dropBalloons', function (balloons) {
 	console.log("dropBalloons");
 	console.log(balloons);
+
+	//simulate baloon burst 
+	var randomBalloon = balloons[Math.floor(Math.random() * balloons.length)];
+	console.log("didBurst balloonId: " + randomBalloon.id);
+	socket.emit('didBurst', randomBalloon.id);
+});
+
+socket.on('doBurst', function (balloonId) {
+	console.log("doBurst balloonId: " + balloonId);
 });
 
 socket.on('stopGame', function () {
