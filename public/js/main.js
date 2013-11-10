@@ -88,7 +88,7 @@ var Application = {
 		$('#gamesList').on('click', function(evt) {
 			evt.preventDefault();
 			evt.stopPropagation();
-			target = $(evt.target);
+			target = $(evt.target||evt.srcElement);
 			if(target.hasClass('joinBtn')) {
 				$.ajax({
 					type: "POST",
