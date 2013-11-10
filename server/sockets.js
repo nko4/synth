@@ -1,12 +1,7 @@
-var io,
-	store,
-	cookie = require('cookie'),
+var cookie = require('cookie'),
 	meta = require('../meta');
 
 exports.setup = function(io, store) {
-	io = io;
-	store = store;
-
     io.sockets.on('connection', function (socket) {
         if(socket.handshake.headers.cookie) {
             var userId = cookie.parse(socket.handshake.headers.cookie)[meta.userId];
@@ -16,4 +11,8 @@ exports.setup = function(io, store) {
             }
         }  
     });	
+};
+
+exports.broadCastNewGame = function(io, game) {
+    io.sockets.emit("newGame", game);
 };

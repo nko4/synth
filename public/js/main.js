@@ -44,7 +44,6 @@ var Application = {
 			$('#userInfo').remove();
 			$('#userInfoWrapper').append(out);
 			$('#dashboard').removeClass('hide').addClass('animated flipInY');
-			_this.initStartGameBtn();
 		});
 	},	
 
@@ -63,12 +62,10 @@ var Application = {
 	renderDashboard: function(gameData) {
 		var _this = this;
 		dust.render("gamesInfo", gameData, function(err, out) {	
-			$('#gamesInfo').remove();
-			if(gameData.games.length) {
-				$('#gamesInfoWrapper').append(out);
-				$('#dashboard').removeClass('hide');
-				_this.initJoinGameBtn();
-			}
+			$('#gamesInfoWrapper').html(out);
+			$('#dashboard').removeClass('hide');
+			_this.initStartGameBtn();
+			_this.initJoinGameBtn();
 		});
 	},
 
@@ -98,8 +95,11 @@ var Application = {
 		  		alert('Game Joined');
 		  	});
 		});
-	}
+	},
 
+	appendNewGame: function(game) {
+		$('#gamesList').append('<a href="" class="list-group-item joinBtn" data-id="' + game.gameId + '">Compete with ' + game.createdByName + '</a>');
+	}
 };
 
 $(document).ready(function() {
@@ -135,4 +135,8 @@ socket.on('doBurst', function (balloonId) {
 socket.on('stopGame', function (game) {
 	alert("Winner of thie Game is: "+game.winner)
 	console.log("stopGame");
+});
+
+socket.on('newGame', function(game) {
+	Application.appendNewGame(game);
 });
