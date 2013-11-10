@@ -63,10 +63,12 @@ var Application = {
 	},
 
 	renderDashboard: function(gameData) {
+		var _this = this;
 		dust.render("gamesInfo", gameData, function(err, out) {
 			$('#gamesInfo').remove();
 			$('#gamesInfoWrapper').append(out);
 			$('#dashboard').removeClass('hide');
+			_this.initJoinGameBtn();
 		});
 	},
 
@@ -80,6 +82,20 @@ var Application = {
 			.done(function( data ) {
 				_this.getGamesInfo();
 		  		alert('Game Started.. waiting for other player...');
+		  	});
+		});
+	},
+
+	initJoinGameBtn: function() {
+		var _this = this;
+		$('.joinBtn').on('click', function(evt) {
+			$.ajax({
+				type: "POST",
+				url: "/game/join/"+$(this).attr("data-id")
+			})
+			.done(function( data ) {
+				_this.getGamesInfo();
+		  		alert('Game Joined');
 		  	});
 		});
 	}
