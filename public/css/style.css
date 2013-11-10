@@ -24,7 +24,7 @@ html, body, #container, #game, #canvas {
 }
 
 body {
-	background: url('wood.png');
+	background: url('bg1.png');
 }
 
 .well {
