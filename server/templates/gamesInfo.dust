@@ -1,5 +1,5 @@
 <div id = "gamesInfo" class="panel panel-default">
-	
+
 	<div class="panel-heading">Start Playing!</div>
 	<div class="panel-body">
 	   <p>Available Games:</p>
@@ -8,7 +8,7 @@
 	<ul id = "gamesList" class="list-group">
 			{#games}
 				<li role="radio" class="list-group-item" style="margin-top: 15px;">
-					<button class = "joinBtn " data-id = "{gameId}">Join Game</button>
+					Created by: {createdByName} <button class = "joinBtn " data-id = "{gameId}">Join Game</button>
 				</li>
 			{/games}
 		</ul>
