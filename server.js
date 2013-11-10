@@ -14,7 +14,7 @@ if (process.getuid() === 0) {
 }    
 
 
-mongoClient.connect('mongodb://127.0.0.1:27017/synth', function(err, db) {
+mongoClient.connect('mongodb://localhost:27017/synth', function(err, db) {
 	if(err) throw err;
 
 	webserver(new Store(db));
