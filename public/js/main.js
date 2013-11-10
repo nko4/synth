@@ -64,11 +64,9 @@ var Application = {
 		var _this = this;
 		dust.render("gamesInfo", gameData, function(err, out) {	
 			$('#gamesInfo').remove();
-			if(gameData.games.length) {
-				$('#gamesInfoWrapper').append(out);
-				$('#dashboard').removeClass('hide');
-				_this.initJoinGameBtn();
-			}
+			$('#gamesInfoWrapper').append(out);
+			$('#dashboard').removeClass('hide');
+			_this.initJoinGameBtn();
 		});
 	},
 
