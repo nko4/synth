@@ -1,3 +1,5 @@
+var Socket;
+
 var Application = {
 
 	init: function() {
@@ -31,6 +33,7 @@ var Application = {
 			userData = data;
 			_this.renderUserInfo(userData);
 			_this.getGamesInfo();
+			Socket.init();
 	  	}).
 	  	fail(function(data) {
 	    	$('#register').removeClass('hide');
@@ -125,36 +128,39 @@ $(document).ready(function() {
 });
 
 
+Socket = {
+	init: function() {
+		var socket = io.connect('/');
+		socket.on('startGame', function (game) {
+			console.log("startGame");
+			Application.renderGameView();
+		});
 
-var socket = io.connect('/');
-socket.on('startGame', function (game) {
-	console.log("startGame");
-	Application.renderGameView();
-});
+		socket.on('registeredUser', function () {
+			console.log("registeredUser");
+		});
 
-socket.on('registeredUser', function () {
-	console.log("registeredUser");
-});
+		socket.on('dropBalloons', function (balloons) {
+			console.log("dropBalloons");
+			console.log(balloons);
 
-socket.on('dropBalloons', function (balloons) {
-	console.log("dropBalloons");
-	console.log(balloons);
+			//simulate baloon burst 
+			var randomBalloon = balloons[Math.floor(Math.random() * balloons.length)];
+			console.log("didBurst balloonId: " + randomBalloon.id);
+			socket.emit('didBurst', randomBalloon);
+		});
 
-	//simulate baloon burst 
-	var randomBalloon = balloons[Math.floor(Math.random() * balloons.length)];
-	console.log("didBurst balloonId: " + randomBalloon.id);
-	socket.emit('didBurst', randomBalloon);
-});
+		socket.on('doBurst', function (balloonId) {
+			console.log("doBurst balloonId: " + balloonId);
+		});
 
-socket.on('doBurst', function (balloonId) {
-	console.log("doBurst balloonId: " + balloonId);
-});
+		socket.on('stopGame', function (gameResult) {
+			alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "\n" +gameResult.nameB+" Scored:" +gameResult.scoreB + "\nAnd the Winner is: "+gameResult.winner);
+			console.log("stopGame");
+		});
 
-socket.on('stopGame', function (gameResult) {
-	alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "\n" +gameResult.nameB+" Scored:" +gameResult.scoreB + "\nAnd the Winner is: "+gameResult.winner);
-	console.log("stopGame");
-});
-
-socket.on('newGame', function(game) {
-	Application.appendNewGame(game);
-});
+		socket.on('newGame', function(game) {
+			Application.appendNewGame(game);
+		});
+	}
+};
