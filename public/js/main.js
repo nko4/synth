@@ -120,6 +120,7 @@ var Application = {
 		dust.render("game", {}, function(err, out) {
 			$('#well').hide();	
 			$('#game').html(out);
+			$('body').removeClass('bg').addClass('clouds');
 			setTimeout(function() {
 				gameInstance = new Game();
 			}, 300);		

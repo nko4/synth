@@ -28,8 +28,14 @@ html, body {
 	text-align: center;
 }
 
-body {
+.bg {
 	background: url('bg2.jpg');
+	background-position-y: 60px;
+}
+
+.clouds {
+	background: url('cloud.jpg');
+	background-position-y: 60px;
 }
 
 .well {
