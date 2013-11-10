@@ -1,3 +1,5 @@
+process.chdir(__dirname);
+
 var nko = require('nko')('1Te9Gvwfrmm8qZKH');
 
 var mongoClient = require('mongodb').MongoClient,
