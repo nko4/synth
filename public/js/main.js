@@ -78,7 +78,6 @@ var Application = {
 			}).
 			done(function(data) {
 				_this.getGamesInfo();
-		  		alert('Game Started.. waiting for other player...');
 		  	});
 		});
 	},
@@ -86,19 +85,27 @@ var Application = {
 	initJoinGameBtn: function() {
 		var _this = this;
 		$('.joinBtn').on('click', function(evt) {
+			evt.preventDefault();
+			evt.stopPropagation();
 			$.ajax({
 				type: "POST",
 				url: "/game/join/" + $(this).attr("data-id")
 			}).
-			done(function( data ) {
-				_this.getGamesInfo();
-		  		alert('Game Joined');
+			done(function(data) {
+				_this.renderGameView(data);
 		  	});
 		});
 	},
 
 	appendNewGame: function(game) {
 		$('#gamesList').append('<a href="" class="list-group-item joinBtn" data-id="' + game.gameId + '">Compete with ' + game.createdByName + '</a>');
+	},
+
+	renderGameView: function(data) {
+		dust.render("game", {}, function(err, out) {
+			$('#well').remove();	
+			$('#container').html(out);
+		});
 	}
 };
 
