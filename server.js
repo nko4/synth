@@ -113,7 +113,7 @@ WebServer = function(store) {
         });
     });    
 
-    server.listen(port, 'localhost', function(err) {
+    server.listen(port, '0.0.0.0', function(err) {
          if (err) { console.error(err); process.exit(-1); }
 
         // if run as root, downgrade to the owner of this file
