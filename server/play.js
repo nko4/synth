@@ -29,9 +29,31 @@ Play.prototype.start = function() {
 };
 
 Play.prototype.startGame = function() {
+	this.bootstrapBurst();
+	this.bootstrapPlayerMovements();
 	this.io.sockets.socket(this.playerA.socketId).emit("startGame", this.game);
-	this.io.sockets.socket(this.playerB.socketId).emit("startGame", this.game);
+	this.io.sockets.socket(this.playerB.socketId).emit("startGame", this.game);	
 	this.run();
+};
+
+Play.prototype.bootstrapBurst = function() {
+	var self = this;
+	self.io.sockets.socket(self.playerA.socketId).on("didBurst", function(balloonId) {
+		self.io.sockets.socket(self.playerB.socketId).emit("doBurst", balloonId);
+	});
+	self.io.sockets.socket(self.playerB.socketId).on("didBurst", function(balloonId) {
+		self.io.sockets.socket(self.playerA.socketId).emit("doBurst", balloonId);
+	});
+};
+
+Play.prototype.bootstrapPlayerMovements = function() {
+	var self = this;
+	self.io.sockets.socket(self.playerA.socketId).on("didMove", function(position) {
+		self.io.sockets.socket(self.playerB.socketId).emit("doMove", position);
+	});
+	self.io.sockets.socket(self.playerB.socketId).on("didMove", function(position) {
+		self.io.sockets.socket(self.playerA.socketId).emit("doMove", position);
+	});
 };
 
 Play.prototype.run = function() {
