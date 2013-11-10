@@ -120,6 +120,7 @@ var Application = {
 		dust.render("game", {}, function(err, out) {
 			$('#well').hide();	
 			$('#game').html(out);
+			$('#game').show();
 			$('body').removeClass('bg').addClass('clouds');	
 			setTimeout(function() {
 				gameInstance = new Game();
@@ -166,7 +167,8 @@ Socket = {
 				alert(gameResult.nameA+" Scored:" +gameResult.scoreA+ "\n" +gameResult.nameB+" Scored:" +gameResult.scoreB + "\n\n\nAnd the Winner is: "+gameResult.winner);
 			}
 			$('body').removeClass('clouds').addClass('bg');
-			$('#well').show();		
+			$('#well').show();	
+			$('#game').hide();		
 			console.log("stopGame");
 		});
 
