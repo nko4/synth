@@ -82,7 +82,7 @@ Play.prototype.run = function() {
 			clearInterval(intervalID);
 			self.stop();
 		}
-	}, 20000);
+	}, 4000);
 };
 
 Play.prototype.stop = function() {
